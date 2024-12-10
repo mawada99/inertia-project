@@ -34,6 +34,8 @@ export default function SignUp({csrf_token}) {
       const { errors } = formState;
       const onSubmit = (data) => {
         console.log(data);
+        console.log(data);
+        
         router.post('/signup', data);
   
      
@@ -54,7 +56,7 @@ export default function SignUp({csrf_token}) {
             <h1>Welcome</h1>
            
             <form onSubmit={handleSubmit(onSubmit)}>
-         <input type="hidden" value={csrf_token} name="_token"/>
+         <MUItextField type="hidden" register={register}  errors={errors}  name="_token"  label={t("token")} defaultValue={csrf_token}/>
             
               <Grid2 container spacing={2}>
 
