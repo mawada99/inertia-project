@@ -7,6 +7,8 @@
     @inertiaHead
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.jsx'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body class="font-sans antialiased leading-none text-gray-800">

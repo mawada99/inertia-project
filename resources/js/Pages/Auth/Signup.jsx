@@ -16,7 +16,7 @@ import { useState } from "react";
 // } from "@mui/icons-material";
 
 
-export default function SignUp({test_message}) {
+export default function SignUp({csrf_token}) {
     const {
         handleSubmit,
         register,
@@ -28,6 +28,9 @@ export default function SignUp({test_message}) {
         getValues,
         watch,
       } = useForm();
+
+      console.log(csrf_token);
+      
       const { errors } = formState;
       const onSubmit = (data) => {
         console.log(data);
@@ -51,7 +54,7 @@ export default function SignUp({test_message}) {
             <h1>Welcome</h1>
            
             <form onSubmit={handleSubmit(onSubmit)}>
-         
+         <input type="hidden" value={csrf_token} name="_token"/>
             
               <Grid2 container spacing={2}>
 
