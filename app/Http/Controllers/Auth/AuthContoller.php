@@ -38,7 +38,7 @@ class AuthContoller extends Controller
     {
         $user = new User();
 
-        $user->forceFill($request->except(['password_confirmation']))->save();
+        $user->forceFill($request->except(['password_confirmation', '_token']))->save();
 
         return redirect()->route('login');
     }
