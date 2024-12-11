@@ -18,4 +18,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/signup', [AuthContoller::class, 'signup']);
 });
 
-Route::get('/home', [HomeContoller::class, 'index'])->middleware('auth')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/logout', [AuthContoller::class, 'logout']);
+    Route::get('/home', [HomeContoller::class, 'index'])->name('home');
+});
