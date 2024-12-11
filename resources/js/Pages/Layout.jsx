@@ -8,42 +8,45 @@ import { ModeContext } from "../Context/ModeContext";
 import { LANGUAGES_DETAILS } from "../LanguagesVariables";
 import { Fragment, useContext, useEffect } from "react";
 
-const languages = [
-    "ar",
-    "en",
-    "ku"
-  ];
+const languages = ["ar", "en", "ku"];
 export default function Layout({ children }) {
- 
-  
     const { i18n } = useTranslation();
 
-    document.getElementsByTagName("html")[0].setAttribute("dir", i18n.language === "ku" ? "rtl" : i18n.dir());
+    document
+        .getElementsByTagName("html")[0]
+        .setAttribute("dir", i18n.language === "ku" ? "rtl" : i18n.dir());
     const Languages = languages;
-  
-    const { firstLoad } = useContext(ModeContext)
-  
+
+    const { firstLoad } = useContext(ModeContext);
+
     useEffect(() => {
-      const lang = LANGUAGES_DETAILS[i18n.language];
-      document.body.style.fontFamily = `${lang.fontFamily}, sans-serif !important`;
-  
-      return () => {
-        document.body.style.fontFamily = '';
-      };
+        const lang = LANGUAGES_DETAILS[i18n.language];
+        document.body.style.fontFamily = `${lang.fontFamily}, sans-serif !important`;
+
+        return () => {
+            document.body.style.fontFamily = "";
+        };
     }, [i18n.language]);
-  
-    moment.locale(localStorage.getItem("i18nextLng") ? localStorage.getItem("i18nextLng") : Languages[0]);
-    return (   <main>
-       <header>  <Fragment>
-        {/* Conditionally render WebsiteHeader */}
-        {document.location.pathname.startsWith("/admin") ? (
-          firstLoad && <WebsiteHeader />
-        ) : (
-          <WebsiteHeader />
-        )}
-        {/* Render the main app */}
-     </Fragment>
-    </header>
+
+    moment.locale(
+        localStorage.getItem("i18nextLng")
+            ? localStorage.getItem("i18nextLng")
+            : Languages[0]
+    );
+    return (
+        <main>
+            <header>
+                {" "}
+                <Fragment>
+                    {/* Conditionally render WebsiteHeader */}
+                    {document.location.pathname.startsWith("/home") ? (
+                        firstLoad && <WebsiteHeader />
+                    ) : (
+                        <WebsiteHeader />
+                    )}
+                    {/* Render the main app */}
+                </Fragment>
+            </header>
             {/* 
                 <Link href="/">Home</Link>
                 <Link href="/about">About</Link>
@@ -53,4 +56,3 @@ export default function Layout({ children }) {
         </main>
     );
 }
-

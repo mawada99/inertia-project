@@ -34,7 +34,14 @@ export default function Login({ csrf_token }) {
         console.log(data);
         console.log(data);
 
-        router.post("/login", data);
+        // router.post("/login", data);
+        router.post("/login", data, {
+            onError: (serverErrors) => {
+                Object.entries(serverErrors).forEach(([key, value]) => {
+                    setError(key, { type: "server", message: value });
+                });
+            },
+        });
     };
     const { t } = useTranslation();
     //   const { enqueueSnackbar } = useSnackbar();
@@ -109,6 +116,6 @@ export default function Login({ csrf_token }) {
                     {t("createNewAccount")}
                 </Button>
             </form>
-       </div>
+        </div>
     );
 }

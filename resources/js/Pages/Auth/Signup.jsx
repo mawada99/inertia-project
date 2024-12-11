@@ -1,9 +1,8 @@
-
-import { Head ,router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 
 import Layout from "../Layout";
 import { useForm } from "react-hook-form";
-import {  IconButton, InputAdornment, Grid2, Button } from "@mui/material";
+import { IconButton, InputAdornment, Grid2, Button } from "@mui/material";
 // import Grid2 from "@mui/material/Unstable_Grid22";
 // import Inertia from '@inertiajs/react';
 import ControlMUItextField from "../../Component/HOC/MUI/ControlMUItextField";
@@ -16,8 +15,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 //   VisibilityOff,
 // } from "@mui/icons-material";
 
-
-export default function SignUp({csrf_token}) {
+export default function SignUp({ csrf_token }) {
     const {
         handleSubmit,
         register,
@@ -28,137 +26,141 @@ export default function SignUp({csrf_token}) {
         formState,
         getValues,
         watch,
-      } = useForm();
+    } = useForm();
 
-      console.log(csrf_token);
-      
-      const { errors } = formState;
-      const onSubmit = (data) => {
+    console.log(csrf_token);
+
+    const { errors } = formState;
+    const onSubmit = (data) => {
         console.log(data);
         // console.log(errors);
-        
-        router.post('/signup', data);
-  
-     
-      };
-      const { t } = useTranslation();
+
+        router.post("/signup", data, {
+            onError: (serverErrors) => {
+                Object.entries(serverErrors).forEach(([key, value]) => {
+                    setError(key, { type: "server", message: value });
+                });
+            },
+        });
+    };
+    const { t } = useTranslation();
     //   const { enqueueSnackbar } = useSnackbar();
     const [showPassword, setShowPassword] = useState(false);
     const [ConShowPassword, ConSetShowPassword] = useState(false);
     const handleClickShowPassword = () => {
-      setShowPassword(!showPassword);
+        setShowPassword(!showPassword);
     };
     const handleClickConShowPassword = () => {
-      ConSetShowPassword(!ConShowPassword);
+        ConSetShowPassword(!ConShowPassword);
     };
     return (
         <Layout>
             <Head title="Welcome" />
             <h1>Welcome</h1>
-           
+
             <form onSubmit={handleSubmit(onSubmit)}>
-         <MUItextField type="hidden" register={register}  errors={errors}  name="_token"  label={t("token")} defaultValue={csrf_token}/>
-            
-              <Grid2 container spacing={2}>
+                <MUItextField
+                    type="hidden"
+                    register={register}
+                    errors={errors}
+                    name="_token"
+                    label={t("token")}
+                    defaultValue={csrf_token}
+                />
 
-               <Grid2   size={{ xs: 12, md: 6}}>
-               <MUItextField
-                margin="dense"
-                name={"name"}
-                label={t("name")}
-                register={register}
-                formType={"requireFalse"}
-                errors={errors}
-              />
-            
-            </Grid2> 
-          
-            <Grid2 size={{ xs: 12, md: 6}}>
-              <MUItextField
-                margin="dense"
-                name={"email"}
-                label={t("email")}
-                register={register}
-                errors={errors}
-                formType={"pattern"}
-                formVal={{
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: t("emailIsInvalid"),
-                }}
-              />
-            </Grid2> 
-           
-            <Grid2  size={{ xs: 12, md: 6}}>
-            <MUItextField
-                margin="dense"
-                name={"password"}
-                type={showPassword ? "text" : "password"}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        size="large"
-                      >
-                    
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                label={t("password")}
-                register={register}
-                errors={errors}
-              />
-            </Grid2> 
-            <Grid2  size={{ xs: 12, md: 6}}>
-            <MUItextField
-                margin="dense"
-                name={"password_confirmation"}
-                type={ConShowPassword ? "text" : "password"}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickConShowPassword}
-                        size="large"
-                      >
-                        
-                        {ConShowPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                label={t("password")}
-                register={register}
-                errors={errors}
-              />
-            </Grid2> 
-            </Grid2>
+                <Grid2 container spacing={2}>
+                    <Grid2 size={{ xs: 12, md: 6 }}>
+                        <MUItextField
+                            margin="dense"
+                            name={"name"}
+                            label={t("name")}
+                            register={register}
+                            formType={"requireFalse"}
+                            errors={errors}
+                        />
+                    </Grid2>
 
-            <Button
-              
-                size="large"
-                fullWidth
-                variant="contained"
-                color="primary"
-               
-                type="submit"
-              >
-                {t("createNewAccount")}
-              </Button>
+                    <Grid2 size={{ xs: 12, md: 6 }}>
+                        <MUItextField
+                            margin="dense"
+                            name={"email"}
+                            label={t("email")}
+                            register={register}
+                            errors={errors}
+                            formType={"pattern"}
+                            formVal={{
+                                value: /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                message: t("emailIsInvalid"),
+                            }}
+                        />
+                    </Grid2>
 
-</form>
+                    <Grid2 size={{ xs: 12, md: 6 }}>
+                        <MUItextField
+                            margin="dense"
+                            name={"password"}
+                            type={showPassword ? "text" : "password"}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            size="large"
+                                        >
+                                            {showPassword ? (
+                                                <Visibility />
+                                            ) : (
+                                                <VisibilityOff />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            label={t("password")}
+                            register={register}
+                            errors={errors}
+                        />
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, md: 6 }}>
+                        <MUItextField
+                            margin="dense"
+                            name={"password_confirmation"}
+                            type={ConShowPassword ? "text" : "password"}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickConShowPassword}
+                                            size="large"
+                                        >
+                                            {ConShowPassword ? (
+                                                <Visibility />
+                                            ) : (
+                                                <VisibilityOff />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            label={t("password")}
+                            register={register}
+                            errors={errors}
+                        />
+                    </Grid2>
+                </Grid2>
 
-       
-
-       
-          
-       
-      
+                <Button
+                    size="large"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                >
+                    {t("createNewAccount")}
+                </Button>
+            </form>
         </Layout>
     );
 }

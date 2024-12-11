@@ -9,9 +9,7 @@ import useWidth, { isWidthDown } from "../useWidth";
 import HomePageHeader from "../Component/HomePage/Navbar/header/HomePageHeader";
 import Header from "./Header";
 
-
 export default function WebsiteHeader(props) {
-    
     const dashboard = document.location.pathname.startsWith("/home");
     const notLandingPage =
         document.location.pathname.endsWith("login") ||
@@ -54,14 +52,11 @@ export default function WebsiteHeader(props) {
 
     if (dashboard) {
         console.log("dd");
-        
-        header = <Header MenuButton={MenuButton} props={props} />
-    } else if (
-        (document.location.pathname === "/") ||
-        notLandingPage
-    ) {
+
+        header = <Header MenuButton={MenuButton} props={props} />;
+    } else {
         console.log("ddsssss");
-        header =  <HomePageHeader closeDrawer />;
+        header = <HomePageHeader closeDrawer />;
     }
-    return  header;
+    return header;
 }
