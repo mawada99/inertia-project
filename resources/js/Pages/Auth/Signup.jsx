@@ -10,6 +10,7 @@ import ControlMUItextField from "../../Component/HOC/MUI/ControlMUItextField";
 import MUItextField from "../../Component/HOC/MUI/MUItextField";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 // import {
 //   Visibility,
 //   VisibilityOff,
@@ -34,7 +35,7 @@ export default function SignUp({csrf_token}) {
       const { errors } = formState;
       const onSubmit = (data) => {
         console.log(data);
-        console.log(data);
+        // console.log(errors);
         
         router.post('/signup', data);
   
@@ -101,7 +102,8 @@ export default function SignUp({csrf_token}) {
                         onClick={handleClickShowPassword}
                         size="large"
                       >
-                        {showPassword ? "s":"h"}
+                    
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -114,7 +116,7 @@ export default function SignUp({csrf_token}) {
             <Grid2  size={{ xs: 12, md: 6}}>
             <MUItextField
                 margin="dense"
-                name={"confirmPassword"}
+                name={"password_confirmation"}
                 type={ConShowPassword ? "text" : "password"}
                 InputProps={{
                   endAdornment: (
@@ -124,7 +126,8 @@ export default function SignUp({csrf_token}) {
                         onClick={handleClickConShowPassword}
                         size="large"
                       >
-                        {ConShowPassword ? "s":"h"}
+                        
+                        {ConShowPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),

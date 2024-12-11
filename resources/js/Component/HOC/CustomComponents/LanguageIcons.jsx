@@ -11,12 +11,11 @@ import {
 } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { LANGUAGES_DETAILS } from "../../../helpers/LanguagesVariables";
-import config from "../../../config.json";
 
-import { useApolloClient } from "@apollo/client";
+
 import LanguageIcon from '@mui/icons-material/Language';
 import { styled } from '@mui/material/styles';
+import { LANGUAGES_DETAILS } from "../../../LanguagesVariables";
 
 const PREFIX = 'language';
 
@@ -34,15 +33,24 @@ const Root = styled('div')((
     // padding: theme.spacing(1),
   },
 }));
+const languages= [
+  "ar",
+  "en",
+  "ku"
+];
 
 const LanguageIcons = () => {
   const { t, i18n } = useTranslation();
-  const client = useApolloClient();
+
 
   const changeLanguage = (event) => {
-    i18n.changeLanguage(event.target.value);
+    console.log(i18n);
+    
+    console.log(i18n.dir());
+    
+    i18n.changeLanguage(event.target.value)
     document.getElementsByTagName("html")[0].setAttribute("dir", i18n.language === "ku" ? "rtl" : i18n.dir());
-    client.reFetchObservableQueries();
+    // client.reFetchObservableQueries();
     handleCloseLang()
   };
 
@@ -58,7 +66,7 @@ const LanguageIcons = () => {
     setAnchorElLang(null);
   };
 
-  if (config.app.languages.length === 1) {
+  if (languages.length === 1) {
     return null
   }
 
@@ -97,7 +105,7 @@ const LanguageIcons = () => {
               value={i18n.language}
               onChange={changeLanguage}
             >
-              {config.app.languages.map((lang, index) => {
+              {languages.map((lang, index) => {
                 return (
                   <ListItem className={classes.list} key={index}>
                     <FormControlLabel

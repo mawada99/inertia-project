@@ -7,7 +7,9 @@ import ModeContextProvider from "./Context/ModeContext";
 import moment from "moment";
 import "moment/locale/ar";
 import "moment/locale/ku";
+import "./i18n";
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

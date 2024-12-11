@@ -44,7 +44,7 @@ export default function Login({ csrf_token }) {
     };
 
     return (
-        <Layout>
+        <div>
             <Head title="Welcome" />
             <h1>login</h1>
 
@@ -109,6 +109,6 @@ export default function Login({ csrf_token }) {
                     {t("createNewAccount")}
                 </Button>
             </form>
-        </Layout>
+       </div>
     );
 }
