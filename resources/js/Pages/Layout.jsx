@@ -8,6 +8,38 @@ import { ModeContext } from "../Context/ModeContext";
 import { LANGUAGES_DETAILS } from "../LanguagesVariables";
 import { Fragment, useContext, useEffect } from "react";
 
+import React, { memo } from "react";
+import { styled } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import Footer from "../Layout/Footer";
+
+const PREFIX = "Layout";
+
+const classes = {
+    drawerHeader: `${PREFIX}-drawerHeader`,
+    mainContainer: `${PREFIX}-mainContainer`,
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled("div")(({ theme }) => ({
+    [`& .${classes.drawerHeader}`]: {
+        display: "flex",
+        alignItems: "center",
+        padding: theme.spacing(0, 1),
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
+        justifyContent: "flex-end",
+        justifyContent: "space-between",
+    },
+
+    [`& .${classes.mainContainer}`]: {
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+    },
+}));
+
 const languages = ["ar", "en", "ku"];
 export default function Layout({ children }) {
     const { i18n } = useTranslation();
@@ -34,7 +66,8 @@ export default function Layout({ children }) {
             : Languages[0]
     );
     return (
-        <main>
+        <Root>
+            <CssBaseline />
             <header>
                 {" "}
                 <Fragment>
@@ -48,12 +81,11 @@ export default function Layout({ children }) {
                     {/* Render the main app */}
                 </Fragment>
             </header>
-            {/* 
-                <Link href="/">Home</Link>
-                <Link href="/about">About</Link>
-                <Link href="/contact">Contact</Link>
-            </header> */}
-            <article>{children}</article>
-        </main>
+            <main className={classes.mainContainer}>
+                <div className={classes.drawerHeader} />
+                <article>{children}</article>
+                <Footer />
+            </main>
+        </Root>
     );
 }

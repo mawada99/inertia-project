@@ -1,0 +1,102 @@
+{
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "statistics": "Statistics",
+    "features": "Features",
+    "services": "Services",
+    "about": "About",
+    "trackTheShipment": "Track shipment",
+    "shipmentTrackingCode": "Tracking code",
+    "trackShipmentTitle": "Enter your shipment code to track",
+    "bannerTitle": "Deliver What You Love, On Time",
+    "bannerSubtitle": "We are the fastest ....",
+    "bannerBody": "Deliver your products to any place with a one-stop, full-service next-day delivery and logistics solution.",
+    "aboutTitle": "Who We Are?",
+    "aboutDescription": "We contributes to community development by providing a range of commercial services that support the development plan. We have the honor to offer our customers various services in the field of shipping, unloading and cash collection services (C.O.D) as soon as possible with competitive prices. We offer our services through a group of highly qualified and challenging management.",
+    "aboutPoints": [
+        "We offer a vast ground network that allows you to ship everywhere",
+        "We offer numerous shipping services if you need your shipment to arrive on the second business day",
+        "We offer value-added services such as pickup and delivery options, delivery notification, and special handling"
+    ],
+    "servicesTitle": "Our Services",
+    "servicesSubtitle": "We provide the best",
+    "serviceSections": [
+        {
+            "title": "Air Freight",
+            "body": "Inbound and outbound airfreight services with most professional, cost effective and timely manner",
+            "icon": "flight"
+        },
+        {
+            "title": "Ocean Freight",
+            "body": "Complete range of ocean freight services for full-container loads, consolidated cargo shipments",
+            "icon": "directions_boat"
+        },
+        {
+            "title": "Domestic Shipping",
+            "body": "We offer next day door delivery ,on-demand time-definite and same day delivery with tracking",
+            "icon": "local_shipping"
+        },
+        {
+            "title": "Cash Collection",
+            "body": "Manage your cash flow by monitoring collected cash and pending invoices through cash collection service",
+            "icon": "local_atm"
+        },
+        {
+            "title": "Warehousing",
+            "body": "We store and manage your inventory in our logistics centers offering bonded or duty-paid options",
+            "icon": "store"
+        },
+        {
+            "title": "Express Shipping",
+            "body": "We offer express delivery service anywhere within the same city within two to three hours only",
+            "icon": "speed"
+        }
+    ],
+    "featuresTitle": "Our Awesome Features",
+    "featuresSubtitle": "Why ship with us?",
+    "featureSections": [
+        {
+            "title": "Track orders",
+            "body": "Monitor & track your shipments online from placing the order till delivery through the company's website or through the company's application",
+            "icon": "place"
+        },
+        {
+            "title": "Manage COD",
+            "body": "We also offer cash collection and cash on delivery (COD) services as an option for all our customers without any additional fees",
+            "icon": "attach_money"
+        },
+        {
+            "title": "E-commerce Fulfillment",
+            "body": "We handle your e-commerce, from securely storing your products in our strategically located facilities, carefully packaging and shipping, to securely managing cash collection and return process",
+            "icon": "card_giftcard"
+        },
+        {
+            "title": "Door to door",
+            "body": "We receive your shipment from your home and deliver to the customer's home",
+            "icon": "storefront"
+        }
+    ],
+    "statisticsTitle": "Some Important Statistics That Will Make You Satisfied...",
+    "statisticsBody": "Deliver your products to any place with a one-stop, full-service next-day delivery and logistics solution.",
+    "statisticSections": [
+        {
+            "title": "Delivered Packages",
+            "number": "400,012"
+        },
+        {
+            "title": "Countries Covered",
+            "number": "50"
+        },
+        {
+            "title": "Satisfied Clients",
+            "number": "3,500"
+        },
+        {
+            "title": "Tons of Goods",
+            "number": "3,592"
+        }
+    ],
+    "poweredBy": "powered by",
+    "footerCopyright": "© 2024 Nile Gate",
+    "accurate": "Accurate"
+}

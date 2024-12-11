@@ -1,0 +1,7 @@
+{
+    "min": "{{field}} must not be less than {{number}}",
+    "max": "{{field}} must not be more than {{number}}",
+    "lt": "{{field1}} must be less than {{field2}}",
+    "ltore": "{{field1}} must be less than or equal {{field2}}",
+    "mt": "{{field1}} must be more than {{field2}}"
+}
