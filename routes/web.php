@@ -1,19 +1,21 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthContoller;
+use App\Http\Controllers\HomeContoller;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', [UserController::class, 'test']);
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/login', [AuthContoller::class, 'loginForm'])->name('login');
 
-Route::get('/login', [AuthContoller::class, 'loginForm'])->middleware('guest');
+    Route::post('/login', [AuthContoller::class, 'login']);
 
-Route::post('/login', [AuthContoller::class, 'login'])->middleware('guest');
+    Route::get('/signup', [AuthContoller::class, 'signupForm']);
 
-Route::get('/signup', [AuthContoller::class, 'signupForm']);
+    Route::post('/signup', [AuthContoller::class, 'signup']);
+});
 
-Route::post('/signup', [AuthContoller::class, 'signup']);
+Route::get('/home', [HomeContoller::class, 'index'])->middleware('auth')->name('home');
