@@ -1,3 +1,4 @@
+import "./bootstrap";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
@@ -10,6 +11,9 @@ import "moment/locale/ku";
 import "./i18n";
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
+Echo.channel(`users`).listen("UserCreated", (e) => {
+    console.log("----websocket-----", e.user);
+});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -21,7 +25,12 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<ModeContextProvider> {React.createElement(withRoot(App), props)}</ModeContextProvider>);
+        root.render(
+            <ModeContextProvider>
+                {" "}
+                {React.createElement(withRoot(App), props)}
+            </ModeContextProvider>
+        );
     },
     progress: {
         color: "#F87415",

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing_page');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [AuthContoller::class, 'loginForm'])->name('login');

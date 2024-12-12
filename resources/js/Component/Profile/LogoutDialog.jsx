@@ -24,7 +24,6 @@ function LogoutDialog(props) {
     const { t } = useTranslation();
 
     const LogoutHandler = () => {
-        console.log(csrf_token);
         const data = {
             _token: csrf_token,
         };

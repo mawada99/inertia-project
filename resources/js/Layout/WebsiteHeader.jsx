@@ -51,11 +51,8 @@ export default function WebsiteHeader(props) {
     };
 
     if (dashboard) {
-        console.log("dd");
-
         header = <Header MenuButton={MenuButton} props={props} />;
     } else {
-        console.log("ddsssss");
         header = <HomePageHeader closeDrawer />;
     }
     return header;

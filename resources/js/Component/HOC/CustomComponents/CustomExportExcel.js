@@ -118,7 +118,6 @@ export default function CustomExportExcel(props) {
         }
       },
       onError: (error) => {
-        console.log(error);
       },
     }
   );

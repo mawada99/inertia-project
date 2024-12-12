@@ -1,0 +1,17 @@
+extend type Mutation{
+  login(input: LoginInput! @spread): UserWithToken!
+  @field(resolver: "Login")
+}
+
+extend type Query {
+  me: String @find
+}
+
+type UserWithToken{
+  test: String
+}
+
+input LoginInput @validator {
+  email: String!
+  password: String!
+}

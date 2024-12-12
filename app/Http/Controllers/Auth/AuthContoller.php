@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserCreated;
+use App\GraphQL\Validators\LoginInputValidator;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthContoller extends Controller
@@ -21,6 +24,7 @@ class AuthContoller extends Controller
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = User::where('email', $request->email)->first();
+
             Auth::login($user);
 
             return redirect()->route('home');
@@ -40,6 +44,8 @@ class AuthContoller extends Controller
 
         $user->forceFill($request->except(['password_confirmation', '_token']))->save();
 
+        UserCreated::dispatch($user);
+
         return redirect()->route('login');
     }
 
@@ -47,6 +53,6 @@ class AuthContoller extends Controller
     {
         Auth::logout();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

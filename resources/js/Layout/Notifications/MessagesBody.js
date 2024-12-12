@@ -253,7 +253,6 @@ const MessagesBody = (props) => {
                 page: messagesData.paginatorInfo.currentPage + 1,
               },
             }).then(({ data }) => {
-              // console.log([...messagesData.data, ...data.listMessages.data]);
               setMessagesData((prev) => ({
                 paginatorInfo: data.listMessages.paginatorInfo,
                 data: [...prev.data, ...data.listMessages.data],

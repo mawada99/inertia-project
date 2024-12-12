@@ -12,6 +12,15 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected static array $admins = [
+        'admin@gmail.com',
+    ];
+
+    public function getIsAdminAttribute()
+    {
+        return in_array($this->email, self::$admins);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -44,10 +44,7 @@ const LanguageIcons = () => {
 
 
   const changeLanguage = (event) => {
-    console.log(i18n);
-    
-    console.log(i18n.dir());
-    
+
     i18n.changeLanguage(event.target.value)
     document.getElementsByTagName("html")[0].setAttribute("dir", i18n.language === "ku" ? "rtl" : i18n.dir());
     // client.reFetchObservableQueries();

@@ -127,7 +127,6 @@ const MessageContainer = (props) => {
         });
       },
       onError: ({ networkError }) => {
-        console.log(networkError);
       },
     }
   );

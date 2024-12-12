@@ -54,8 +54,6 @@ let SUBSCRIPTION_EXPIRED;
 
 const graphQLErrors = onError(
   ({ graphQLErrors, networkError, forward, response, operation }) => {
-    console.log(graphQLErrors);
-    console.log(networkError);
     const queryName =
       operation.query.definitions[0].selectionSet?.selections?.[0]?.name?.value;
     const ignorMsg = queryName !== "listMessages";
@@ -63,7 +61,6 @@ const graphQLErrors = onError(
       writequery(null, networkError);
     }
     if (graphQLErrors && ignorMsg) {
-      console.log(graphQLErrors);
       for (let err of graphQLErrors) {
         switch (err.extensions.code) {
           case "INSTANCE_CODE_MISSING":

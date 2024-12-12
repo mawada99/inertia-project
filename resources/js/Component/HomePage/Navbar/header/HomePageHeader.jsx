@@ -282,12 +282,10 @@ const Header = (props) => {
             >
                 {links.map((l, i) => (
                     <div key={i} style={{ margin: "10px", opacity: 1 }}>
-                        {console.log(l)}
                         {l}
                     </div>
                     // <>d</>
                 ))}
-                {console.log(drawerState)}
             </Drawer>
         );
     };
@@ -354,8 +352,6 @@ const Header = (props) => {
                                         <IconButton
                                             color="primary"
                                             onClick={() => {
-                                                console.log("wwwwww");
-
                                                 setDrawerState(true);
                                             }}
                                             size="medium"
