@@ -10,6 +10,7 @@ import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import { useContext } from "react";
 import { CssBaseline, darkScrollbar } from "@mui/material";
+// import lightScrollbar from "./lightScrollbar";
 import { LANGUAGES_DETAILS } from "./LanguagesVariables";
 // import lightScrollbar from "./lightScrollbar";
 import { ModeContext } from "./Context/ModeContext";
@@ -26,18 +27,16 @@ const cacheRtl = createCache({
 
 function withRoot(Component) {
     function WithRoot(props) {
-        // const { i18n } = useTranslation();
+        const { i18n } = useTranslation();
 
         const { darkMode } = useContext(ModeContext);
-        const primaryColor = darkMode
-            ? "#f5696b"
-            : "#f74754";
-        // const lang = LANGUAGES_DETAILS[i18n.language];
+        const primaryColor = darkMode ? "#f5696b" : "#f74754";
+        const lang = LANGUAGES_DETAILS[i18n.language];
 
-        const dir ="rtl"
+        const dir = i18n.language === "ku" ? "rtl" : i18n.dir();
 
         const theme = createTheme({
-            direction:  "rtl" ,
+            direction: dir,
 
             components: {
                 MuiCssBaseline: {
@@ -135,7 +134,7 @@ function withRoot(Component) {
                 // secondary: { main: color.blue[400] }
             },
             typography: {
-                fontFamily: ["sans-serif"].join(","),
+                fontFamily: [`${lang.fontFamily}`, "sans-serif"].join(","),
                 fontSize: 12.5,
             },
         });

@@ -1,35 +1,66 @@
-import { Head, router } from "@inertiajs/react";
-
-import Layout from "../Layout";
-import { useForm } from "react-hook-form";
-import { IconButton, InputAdornment, Grid2, Button } from "@mui/material";
-// import Grid2 from "@mui/material/Unstable_Grid22";
-// import Inertia from '@inertiajs/react';
-import ControlMUItextField from "../../Component/HOC/MUI/ControlMUItextField";
+import React, { Fragment, useState } from "react";
+import { styled } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 import MUItextField from "../../Component/HOC/MUI/MUItextField";
+import { useForm } from "react-hook-form";
+import { IconButton, InputAdornment } from "@mui/material";
+import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-// import {
-//   Visibility,
-//   VisibilityOff,
-// } from "@mui/icons-material";
+import Layout from "../Layout";
+import { router } from "@inertiajs/react";
+
+const PREFIX = "Login";
+
+const classes = {
+    paper: `${PREFIX}-paper`,
+    avatar: `${PREFIX}-avatar`,
+    form: `${PREFIX}-form`,
+    button: `${PREFIX}-button`,
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled("div")(({ theme }) => ({
+    [`& .${classes.paper}`]: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+
+    [`& .${classes.avatar}`]: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.primary.main,
+    },
+
+    [`& .${classes.form}`]: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+
+    [`& .${classes.button}`]: {
+        marginBottom: theme.spacing(2),
+    },
+}));
 
 export default function Login({ csrf_token }) {
+    const [showPassword, setShowPassword] = useState(false);
+    const { t } = useTranslation();
     const {
         handleSubmit,
         register,
-        control,
-        setValue,
-        unregister,
         setError,
-        formState,
-        getValues,
-        watch,
-    } = useForm();
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            _token: csrf_token,
+        },
+    });
 
-    console.log(csrf_token);
-
-    const { errors } = formState;
     const onSubmit = (data) => {
         console.log(data);
         console.log(data);
@@ -43,79 +74,88 @@ export default function Login({ csrf_token }) {
             },
         });
     };
-    const { t } = useTranslation();
-    //   const { enqueueSnackbar } = useSnackbar();
-    const [showPassword, setShowPassword] = useState(false);
+
     const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
+        setShowPassword((prev) => !prev);
     };
 
     return (
-        <div>
-            <Head title="Welcome" />
-            <h1>login</h1>
+        <Layout>
+            <Root>
+                <Container maxWidth="xs">
+                    <CssBaseline />
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <MUItextField
-                    type="hidden"
-                    register={register}
-                    errors={errors}
-                    name="_token"
-                    label={t("token")}
-                    defaultValue={csrf_token}
-                />
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography
+                            component="h1"
+                            variant="h5"
+                            color={"text.primary"}
+                        >
+                            {t("login")}
+                        </Typography>
 
-                <Grid2 container spacing={2}>
-                    <Grid2 size={{ xs: 12, md: 6 }}>
-                        <MUItextField
-                            margin="dense"
-                            name={"email"}
-                            label={t("email")}
-                            register={register}
-                            errors={errors}
-                            formType={"pattern"}
-                            formVal={{
-                                value: /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                message: t("emailIsInvalid"),
-                            }}
-                        />
-                    </Grid2>
+                        <Fragment>
+                            <form
+                                className={classes.form}
+                                onSubmit={handleSubmit(onSubmit)}
+                            >
+                                <MUItextField
+                                    name={"email"}
+                                    label={t("usernameOrEmail")}
+                                    register={register}
+                                    errors={errors}
+                                    margin="normal"
+                                />
+                                <MUItextField
+                                    margin="normal"
+                                    name={"password"}
+                                    type={showPassword ? "text" : "password"}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={
+                                                        handleClickShowPassword
+                                                    }
+                                                    edge={"end"}
+                                                    size="large"
+                                                >
+                                                    {showPassword ? (
+                                                        <Visibility />
+                                                    ) : (
+                                                        <VisibilityOff />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    label={t("password")}
+                                    register={register}
+                                    errors={errors}
+                                />
 
-                    <Grid2 size={{ xs: 12, md: 6 }}>
-                        <MUItextField
-                            margin="dense"
-                            name={"password"}
-                            type={showPassword ? "text" : "password"}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            size="large"
-                                        >
-                                            {showPassword ? "s" : "h"}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            label={t("password")}
-                            register={register}
-                            errors={errors}
-                        />
-                    </Grid2>
-                </Grid2>
-
-                <Button
-                    size="large"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                >
-                    {t("createNewAccount")}
-                </Button>
-            </form>
-        </div>
+                                <Grid item container justifyContent="center">
+                                    <Button
+                                        fullWidth
+                                        className={classes.button}
+                                        size="large"
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        startIcon={<LockOutlined />}
+                                    >
+                                        {t("login")}
+                                    </Button>
+                                </Grid>
+                            </form>
+                        </Fragment>
+                    </div>
+                </Container>
+            </Root>
+        </Layout>
     );
 }

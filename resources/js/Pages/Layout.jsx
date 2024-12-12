@@ -12,7 +12,6 @@ import React, { memo } from "react";
 import { styled } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import Footer from "../Layout/Footer";
-
 const PREFIX = "Layout";
 
 const classes = {
@@ -81,6 +80,7 @@ export default function Layout({ children }) {
                     {/* Render the main app */}
                 </Fragment>
             </header>
+
             <main className={classes.mainContainer}>
                 <div className={classes.drawerHeader} />
                 <article>{children}</article>
