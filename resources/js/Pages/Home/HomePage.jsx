@@ -1,8 +1,12 @@
 import { Head } from "@inertiajs/react";
 // import Layout from "../Layout";
 import LayoutWithDrawer from "../LayoutWithDrawo";
+import {EchoConnection} from '../../echo';
 
 export default function HomePage({}) {
+    EchoConnection.channel('users').listenToAll(function(e) {
+        console.log("----websocket-----", e);
+    });
     return (
         <LayoutWithDrawer>
             <div>

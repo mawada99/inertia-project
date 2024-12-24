@@ -11,10 +11,6 @@ import "moment/locale/ku";
 import "./i18n";
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
-Echo.channel(`users`).listen("UserCreated", (e) => {
-    console.log("----websocket-----", e.user);
-});
-
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
