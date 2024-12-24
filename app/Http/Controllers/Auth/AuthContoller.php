@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\UserCreated;
-use App\GraphQL\Validators\LoginInputValidator;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Http\Requests\LoginRequest;
+use App\Events\UserCreated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SignupRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\SignupRequest;
 
 class AuthContoller extends Controller
 {
