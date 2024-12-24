@@ -13,19 +13,23 @@ class ShipmentController extends Controller
 {
     public function index()
     {
+        /** @var User */
+        $user = Auth::user();
+
+        $shipments = $user->isAdmin ? Shipment::all() : $user->shipments;
         return Inertia::render('Shipment/ShipmentList', [
-            // 'can' => Gate::allows('create', Shipment::class),
-            // 'shipments' => Shipment::all()->map(function ($shipment) {
-            //     return [
-            //         'id' => $shipment->id,
-            //         'price' => $shipment->price,
-            //         'type' => $shipment->type,
-            //         'payment_method' => $shipment->payment_type,
-            //         'can' => [
-            //             'update_shipment' => Gate::allows('update', [Shipment::class, $shipment]),
-            //         ],
-            //     ];
-            // }),
+            'can' => Gate::allows('create', Shipment::class),
+            'shipments' => $shipments->map(function ($shipment) {
+                return [
+                    'id' => $shipment->id,
+                    'price' => $shipment->price,
+                    'type' => $shipment->type,
+                    'payment_method' => $shipment->payment_type,
+                    'can' => [
+                        'update_shipment' => Gate::allows('update', [Shipment::class, $shipment]),
+                    ],
+                ];
+            }),
         ]);
     }
 

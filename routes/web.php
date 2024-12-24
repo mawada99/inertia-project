@@ -20,7 +20,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/signup', [AuthContoller::class, 'signup']);
 });
 
-Route::middleware(['auth', Admin::class])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/shipments', [ShipmentController::class, 'index']);
     Route::get('/shipments/save/{shipment?}', [ShipmentController::class, 'saveForm']);
     Route::post('/shipments/save', [ShipmentController::class, 'save']);

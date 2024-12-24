@@ -14,11 +14,11 @@ class ShipmentPolicy
 
     public function create(User $user)
     {
-        return !$user->isAdmin;
+        return $user->isAdmin;
     }
 
     public function update(User $user, Shipment $shipment)
     {
-        return $user->id == $shipment->user->id;
+        return $user->id == $shipment->user->id || $user->isAdmin;
     }
 }
