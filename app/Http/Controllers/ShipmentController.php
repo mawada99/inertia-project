@@ -11,7 +11,7 @@ class ShipmentController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Shipment/Index', [
+        return Inertia::render('Shipment/ShipmentList', [
             // 'can' => Gate::allows('create', Shipment::class),
             // 'shipments' => Shipment::all()->map(function ($shipment) {
             //     return [
@@ -29,6 +29,6 @@ class ShipmentController extends Controller
 
     public function createForm()
     {
-        return Inertia::render('Shipment/Create');
+        return Inertia::render('Shipment/ShipmentCreate');
     }
 }
