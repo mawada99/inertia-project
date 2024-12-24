@@ -7,7 +7,6 @@ use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    dd(csrf_field());
     return view('welcome');
 })->name('landing_page');
 
