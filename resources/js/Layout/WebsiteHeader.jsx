@@ -1,20 +1,22 @@
 import React from "react";
-// import Header from "./Header";
+import Header from "./Header";
+import HomePageHeader from "../Component/HomePage/Navbar/header/HomePageHeader";
+import { ModeContext } from "../Context/ModeContext";
 import { useContext } from "react";
 import { IconButton } from "@mui/material";
 import { Menu } from "@mui/icons-material";
-
-import { ModeContext } from "../Context/ModeContext";
 import useWidth, { isWidthDown } from "../useWidth";
-import HomePageHeader from "../Component/HomePage/Navbar/header/HomePageHeader";
-import Header from "./Header";
 
 export default function WebsiteHeader(props) {
-    const dashboard = document.location.pathname.startsWith("/home");
+    const dashboard = document.location.pathname.startsWith("/");
     const notLandingPage =
         document.location.pathname.endsWith("login") ||
-        document.location.pathname.endsWith("register") ||
-        document.location.pathname.endsWith("Forgotpassword");
+        document.location.pathname.endsWith("signup") ||
+        document.location.pathname.endsWith("renewal") ||
+        document.location.pathname.startsWith("/review") ||
+        document.location.pathname.startsWith("/track") ||
+        document.location.pathname.startsWith("/delivery-info") ||
+        document.location.pathname.endsWith("forgot-password");
 
     const { navDrawer, setNavDrawer } = useContext(ModeContext);
     const screenWidth = useWidth();
@@ -49,10 +51,11 @@ export default function WebsiteHeader(props) {
             </IconButton>
         );
     };
+    console.log(dashboard);
 
     if (dashboard) {
         header = <Header MenuButton={MenuButton} props={props} />;
-    } else {
+    } else if (document.location.pathname === "/" || notLandingPage) {
         header = <HomePageHeader closeDrawer />;
     }
     return header;

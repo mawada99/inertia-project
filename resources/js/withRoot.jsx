@@ -12,7 +12,7 @@ import { useContext } from "react";
 import { CssBaseline, darkScrollbar } from "@mui/material";
 // import lightScrollbar from "./lightScrollbar";
 import { LANGUAGES_DETAILS } from "./LanguagesVariables";
-// import lightScrollbar from "./lightScrollbar";
+import lightScrollbar from "./lightScrollbar";
 import { ModeContext } from "./Context/ModeContext";
 
 export const muiCache = createCache({
@@ -44,7 +44,7 @@ function withRoot(Component) {
                         body:
                             themeParam.palette.mode === "dark"
                                 ? darkScrollbar()
-                                : darkScrollbar(),
+                                : lightScrollbar(),
                     }),
                 },
                 MuiIcon: {

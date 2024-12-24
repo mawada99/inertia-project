@@ -1,6 +1,6 @@
 {
   "sideEffects": false,
   "module": "../esm/lightScrollbar/index.js",
-  "main": "./index.js",
+  "main": "./index.jsx",
   "types": "./index.d.ts"
 }

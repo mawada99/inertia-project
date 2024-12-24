@@ -11,6 +11,7 @@ export const StateNavLink = (props) => {
     const { to, staticContext, ...restProps } = props;
     console.log(to);
     console.log("jujuu");
+
     return (
         <Link
             {...restProps}
@@ -21,7 +22,7 @@ export const StateNavLink = (props) => {
             //         ...to?.state,
             //     },
             // }}
-            href={"/users"}
+            href={to?.pathname}
         >
             {props.children}
         </Link>
