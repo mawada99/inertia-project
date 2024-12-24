@@ -22,8 +22,8 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/shipments', [ShipmentController::class, 'index']);
-    Route::get('/shipments/create', [ShipmentController::class, 'createForm']);
-    Route::post('/shipments/create', [ShipmentController::class, 'create']);
+    Route::get('/shipments/save/{shipment?}', [ShipmentController::class, 'saveForm']);
+    Route::post('/shipments/save', [ShipmentController::class, 'save']);
 });
 
 Route::group(['middleware' => 'auth'], function () {

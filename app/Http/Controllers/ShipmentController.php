@@ -29,17 +29,19 @@ class ShipmentController extends Controller
         ]);
     }
 
-    public function createForm()
+    public function saveForm(?Shipment $shipment = null)
     {
-        return Inertia::render('Shipment/ShipmentCreate');
+        return Inertia::render('Shipment/ShipmentCreate', [
+            'shipment' => $shipment,
+        ]);
     }
 
-    public function create(ShipmentRequest $request)
+    public function save(ShipmentRequest $request)
     {
         /** @var User */
         $user = Auth::user();
 
-        $shipment = new Shipment;
+        $shipment = $request->has('id') ? Shipment::find($request->id) : new Shipment;
 
         $request->merge(['user_id' => $user->id]);
 
