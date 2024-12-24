@@ -11,7 +11,7 @@ type UserWithToken{
   test: String
 }
 
-input LoginInput @validator {
+input LoginInput @validation(class: "Auth\\LoginValidation") {
   email: String!
   password: String!
 }

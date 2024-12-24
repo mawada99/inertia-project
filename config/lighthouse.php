@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 return [
     /*
@@ -194,7 +196,7 @@ return [
         'unions' => 'App\\GraphQL\\Unions',
         'scalars' => 'App\\GraphQL\\Scalars',
         'directives' => 'App\\GraphQL\\Directives',
-        'validators' => 'App\\GraphQL\\Validators',
+        'validators' => 'App\\Validations',
     ],
 
     /*
