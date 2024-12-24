@@ -7,6 +7,7 @@ use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    dd(csrf_field());
     return view('welcome');
 })->name('landing_page');
 
@@ -23,6 +24,7 @@ Route::group(['middleware' => 'guest'], function () {
 Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/shipments', [ShipmentController::class, 'index']);
     Route::get('/shipments/create', [ShipmentController::class, 'createForm']);
+    Route::post('/shipments/create', [ShipmentController::class, 'create']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
