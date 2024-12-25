@@ -9,11 +9,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import MUItextField from "../../Component/HOC/MUI/MUItextField";
 import { useForm } from "react-hook-form";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Collapse, IconButton, InputAdornment } from "@mui/material";
 import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import Layout from "../Layout";
 import { router } from "@inertiajs/react";
+import { useSnackbar } from "notistack";
 
 const PREFIX = "Login";
 
@@ -49,6 +50,7 @@ const Root = styled("div")(({ theme }) => ({
 
 export default function Login({ csrf_token }) {
     const [showPassword, setShowPassword] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation();
     const {
         handleSubmit,
@@ -62,15 +64,20 @@ export default function Login({ csrf_token }) {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
-        console.log(data);
-
         // router.post("/login", data);
         router.post("/login", data, {
             onError: (serverErrors) => {
-                Object.entries(serverErrors).forEach(([key, value]) => {
-                    setError(key, { type: "server", message: value });
+                enqueueSnackbar(t("loginProhibited"), {
+                    variant: "error",
+                    anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "right",
+                    },
+                    TransitionComponent: Collapse,
                 });
+                // Object.entries(serverErrors).forEach(([key, value]) => {
+                //     setError(key, { type: "server", message: value });
+                // });
             },
         });
     };

@@ -9,9 +9,6 @@ import { useTranslation } from "react-i18next";
 
 export const StateNavLink = (props) => {
     const { to, staticContext, ...restProps } = props;
-    console.log(to);
-    console.log("jujuu");
-
     return (
         <Link
             {...restProps}

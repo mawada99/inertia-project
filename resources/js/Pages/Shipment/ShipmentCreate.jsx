@@ -42,8 +42,6 @@ import LayoutWithDrawer from "../LayoutWithDrawo";
 import { router } from "@inertiajs/react";
 
 const ShipmentForm = ({ csrf_token, shipment }) => {
-    console.log(shipment);
-
     // const pathURL = props.match.path;
     const { t } = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -92,8 +90,6 @@ const ShipmentForm = ({ csrf_token, shipment }) => {
     }, []);
 
     const onSubmit = (data) => {
-        console.log("data");
-        console.log(data);
         parseInt(data.price);
         router.post("/shipments/save", data, {
             onError: (serverErrors) => {

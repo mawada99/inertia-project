@@ -35,8 +35,6 @@ import { classes, RootStyleList } from "../../GlobalStyles/ListStyle";
 import LayoutWithDrawer from "../LayoutWithDrawo";
 
 const ShipmentsList = ({ shipments }) => {
-    console.log(shipments);
-
     const { t } = useTranslation();
     const screenWidth = useWidth();
     //   const history = useHistory();
@@ -102,7 +100,6 @@ const ShipmentsList = ({ shipments }) => {
             setDrawerState({ ...drawerState, [filterAnchor]: false });
         refetch ? setrefetch(false) : setrefetch(true);
         let handledData = {};
-        console.log(handledData);
 
         for (const key in handledData) {
             if (
@@ -118,8 +115,6 @@ const ShipmentsList = ({ shipments }) => {
             ...handledData,
             rowsPerPage: rowsPerPage,
         });
-
-        console.log(handledData);
 
         // setSearch((prev) => ({
         //     ...handledData,

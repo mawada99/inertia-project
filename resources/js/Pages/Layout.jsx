@@ -70,7 +70,6 @@ export default function Layout({ children }) {
             <header>
                 {" "}
                 <Fragment>
-                    {console.log("wwwwwwwwwwwwwwwww")}
                     {/* Conditionally render WebsiteHeader */}
                     {document.location.pathname.startsWith("/admin") ? (
                         firstLoad && <WebsiteHeader />

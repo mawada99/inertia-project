@@ -124,9 +124,6 @@ const SignUp = ({ csrf_token }) => {
         ConSetShowPassword(!ConShowPassword);
     };
     const onSubmit = (data) => {
-        console.log(data);
-        // console.log(errors);
-
         router.post("/signup", data, {
             onError: (serverErrors) => {
                 Object.entries(serverErrors).forEach(([key, value]) => {

@@ -50,9 +50,7 @@ const rows = [
 ];
 
 export default function HomePage({}) {
-    EchoConnection.channel("users").listenToAll(function (e) {
-        console.log(e.user);
-    });
+    EchoConnection.channel("users").listenToAll(function (e) {});
     return (
         <LayoutWithDrawer>
             <Box sx={{ height: 400, width: "100%" }}>

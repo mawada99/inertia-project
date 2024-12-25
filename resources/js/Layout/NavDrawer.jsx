@@ -215,8 +215,6 @@ const NavDrawer = (props) => {
         </div> */}
                 <List className={classes.topList}>
                     {linksList.map((link, index) => {
-                        console.log(link);
-
                         if (!link.children) {
                             const authorized = link.permission ? true : true;
                             return (

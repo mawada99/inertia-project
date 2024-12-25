@@ -51,7 +51,6 @@ export default function WebsiteHeader(props) {
             </IconButton>
         );
     };
-    console.log(dashboard);
 
     if (dashboard) {
         header = <Header MenuButton={MenuButton} props={props} />;
