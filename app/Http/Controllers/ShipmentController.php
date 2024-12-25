@@ -2,29 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ShipmentRequest;
+use Inertia\Inertia;
 use App\Models\Shipment;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Shipment\ListShipmentsRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Request;
+use App\Http\Requests\Shipment\ShipmentRequest;
 
 class ShipmentController extends Controller
 {
-    public function index(Request $request)
+    public function index(ListShipmentsRequest $request)
     {
         $perPage = $request->get('perPage', 20);
 
-        /** @var User */
-        $user = Auth::user();
-
-        $shipments = $user->isAdmin ? Shipment::paginate($perPage)->withQueryString() : $user->shipments()->paginate($perPage)->withQueryString();
+        $shipments = $this->getShipments($request)->paginate($perPage);
 
         return Inertia::render('Shipment/ShipmentList', [
             'can' => Gate::allows('create', Shipment::class),
             'shipments' => $shipments,
         ]);
+    }
+
+    protected function getShipments(ListShipmentsRequest $request)
+    {
+        /** @var User */
+        $user = Auth::user();
+
+        $query = Shipment::ordered();
+
+        if (!$user->isAdmin)
+            $query->where('user_id', $user->id);
+
+        if ($request->has('price'))
+            $query->where('price', $request->price);
+
+        if ($request->has('type'))
+            $query->where('type', $request->type);
+
+        if ($request->has('payment_type'))
+            $query->where('payment_type', $request->payment_type);
+
+        return $query;
     }
 
     public function saveForm(?Shipment $shipment = null)

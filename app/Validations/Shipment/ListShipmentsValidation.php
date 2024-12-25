@@ -1,29 +1,25 @@
 <?php
 
-namespace App\Validations;
+namespace App\Validations\Shipment;
 
-use App\Models\Shipment;
-use Illuminate\Validation\Rule;
+use App\Validations\Validation;
 
-class ShipmentValidation extends Validation
+class ListShipmentsValidation extends Validation
 {
     public function rules(): array
     {
         return [
-            'id' => [
-                Rule::exists(Shipment::class, 'id'),
-            ],
             'price' => [
-                'required',
+                'nullable',
                 'numeric',
                 'min:1',
             ],
             'type' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'payment_type' => [
-                'required',
+                'nullable',
                 'string',
             ]
         ];
