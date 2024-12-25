@@ -15,8 +15,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 // import { TbDeviceDesktopSearch } from "react-icons/tb";
 import PropTypes from "prop-types";
-// import TitleAppBar from "../../../Layout/TitleAppBar";
-// import LongMenu from "../../../Layout/MenuAppBar";
+import TitleAppBar from "../../../Layout/TitleAppBar";
+import LongMenu from "../../../Layout/MenuAppBar";
 import FullScreenLoading from "../../HOC/FunctionComponents/LoadingPages/FullScreenLoading";
 // import useWidth from "../../../Hooks/useWidth";
 import TableFixedHeaderWraper from "../../HOC/CustomComponents/TableWithFixedHeader";
@@ -221,14 +221,14 @@ const ListWrapper = (props) => {
     const screenWidth = useWidth();
 
     const filterAnchor = screenWidth === "xs" ? "bottom" : "left";
-
+    console.log("sedd" + loading);
     return (
         <Root>
-            {/* {(path || icons) && (
+            {(path || icons) && (
                 <TitleAppBar path={path} type={type}>
                     {icons && <LongMenu icons={icons} />}
                 </TitleAppBar>
-            )} */}
+            )}
             {filters && (
                 <Drawer
                     className={clsx(classes.drawer)}
@@ -270,10 +270,13 @@ const ListWrapper = (props) => {
                     >
                         {customFilters && customFilters}
                         {loading ? (
-                            <FullScreenLoading
-                                height={customFilters ? "auto" : "100%"}
-                                className={classes.backgroundLoading}
-                            />
+                            (console.log("sedd" + loading),
+                            (
+                                <FullScreenLoading
+                                    height={customFilters ? "auto" : "100%"}
+                                    className={classes.backgroundLoading}
+                                />
+                            ))
                         ) : (
                             <Box
                                 height={"100%"}

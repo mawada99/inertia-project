@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import { Box, Typography } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { Globals } from "../Classes/Globals";
 
 export const StateNavLink = (props) => {
     const { to, staticContext, ...restProps } = props;
@@ -29,7 +30,10 @@ export const StateNavLink = (props) => {
 export const SecuredNavLink = (props) => {
     const { permission, hideLink, show, ...restProps } = props;
 
-    if (permission !== undefined || (show !== undefined && !show)) {
+    if (
+        (permission !== undefined && !Globals.user.hasPermission(permission)) ||
+        (show !== undefined && !show)
+    ) {
         return null;
     }
 

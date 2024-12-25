@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@mui/material";
-// import CustomSpinner from "../CustomSpinner";
+import CustomSpinner from "../CustomSpinner";
 
 export default function FullScreenLoading(props) {
     const { size, minHeight, name, height } = props;
@@ -17,11 +17,11 @@ export default function FullScreenLoading(props) {
             {...props}
         >
             {props.children}
-            {/* <CustomSpinner
+            <CustomSpinner
                 name={name ?? "PulseLoader"}
                 speedMultiplier={1.3}
                 size={size ?? 15}
-            /> */}
+            />
         </Grid>
     );
 }

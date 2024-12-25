@@ -65,4 +65,10 @@ class ShipmentController extends Controller
 
         return redirect()->route('home');
     }
+    public function viewShipment(?Shipment $shipment = null)
+    {
+        return Inertia::render('Shipment/ShipmentView', [
+            'shipment' => $shipment,
+        ]);
+    }
 }

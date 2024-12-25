@@ -20,6 +20,7 @@ import NavDrawer from "../Layout/NavDrawer";
 import { useTranslation } from "react-i18next";
 import WebsiteHeader from "../Layout/WebsiteHeader";
 import moment from "moment";
+import withUserDataLoader from "../Layout/UserDataLoader";
 
 const PREFIX = "LayoutWithDrawer";
 
@@ -179,4 +180,4 @@ const LayoutWithDrawer = (props) => {
     );
 };
 
-export default memo(LayoutWithDrawer);
+export default memo(withUserDataLoader(LayoutWithDrawer));

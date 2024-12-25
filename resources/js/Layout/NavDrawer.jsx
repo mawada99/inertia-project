@@ -15,11 +15,11 @@ import { ChevronLeft, ChevronRight, ExpandMore } from "@mui/icons-material";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-
 import { SecuredNavLink } from "../Component/HOC/CustomComponents/Secured";
 import HFWraper from "./WraperHeaderFooter";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Globals } from "../Component/HOC/Classes/Globals";
 
 const PREFIX = "NavDrawer";
 
@@ -148,6 +148,8 @@ const Root = styled("div")(({ theme }) => ({
 }));
 
 const NavDrawer = (props) => {
+    console.log(Globals?.user);
+    console.log("ggg");
     const { navDrawer, handleDrawerClose, drawerAnchor, top } = props;
     let collapseOpened = useRef(true);
     const { t } = useTranslation();
@@ -179,13 +181,13 @@ const NavDrawer = (props) => {
                     pathname: "/shipments",
                     exact: true,
                     primary: t("shipmentList"),
-                    // permission: "freight.shipment.list",
+                    permission: "shipping.shipment.list",
                 },
                 {
                     pathname: "/shipments/save",
                     exact: true,
                     primary: t("createShipment"),
-                    // permission: "freight.shipment.create",
+                    permission: "shipping.shipment.create",
                 },
             ],
         },
@@ -217,9 +219,11 @@ const NavDrawer = (props) => {
                 <List className={classes.topList}>
                     {linksList.map((link, index) => {
                         if (!link.children) {
-                            const authorized = link.permission ? true : true;
+                            const authorized = link.permission
+                                ? Globals.user.hasPermission(link.permission)
+                                : true;
                             return (
-                                true && (
+                                authorized && (
                                     <SecuredNavLink
                                         key={index}
                                         to={{ pathname: link.pathname }}
@@ -257,10 +261,14 @@ const NavDrawer = (props) => {
                                 collapseOpened.current = false;
                             }
                             const authorized = link.children.some((child) =>
-                                child.show !== undefined ? child.show : true
+                                child.show !== undefined
+                                    ? child.show
+                                    : Globals.user.hasPermission(
+                                          child.permission
+                                      )
                             );
                             return (
-                                true && (
+                                authorized && (
                                     <Fragment key={index}>
                                         <ListItemButton
                                             onClick={() =>
@@ -291,6 +299,8 @@ const NavDrawer = (props) => {
                                             unmountOnExit
                                         >
                                             {link.children.map((child, i) => {
+                                                console.log("child", child);
+
                                                 return (
                                                     <SecuredNavLink
                                                         key={i}

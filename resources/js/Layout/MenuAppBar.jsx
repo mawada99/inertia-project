@@ -5,7 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box, ListItemIcon, Tooltip, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import useWidth from "../Hooks/useWidth";
 import { Globals } from "../Component/HOC/Classes/Globals";
 import {
     FilterList,
@@ -19,6 +18,7 @@ import {
 } from "@mui/icons-material";
 import SimCardDownloadOutlinedIcon from "@mui/icons-material/SimCardDownloadOutlined";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import useWidth from "../useWidth";
 
 // iconsConfig.js
 

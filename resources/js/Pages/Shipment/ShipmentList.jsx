@@ -1,30 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { TableBody, TableRow, Button, Grid } from "@mui/material";
-import { Search } from "@mui/icons-material";
-// import CellLink from "../HOC/CustomComponents/CellLink";
-// import MUITablePagination from "../HOC/MUI/TablePagination/MUITablePagination";
-// import { FixedTableCell } from "../HOC/CustomComponents/FixedTableCell";
-// import { pushUrl, windowUrl } from "../HOC/CustomFunctions/pushUrl";
-// import ListWrapper from "../CustomComponents/ListWrapper/ListWrapper";
+import { Add, Search } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-// import useWidth from "../../Hooks/useWidth";
-// import config from "../../config.json";
-// import Grid from "@mui/material/Unstable_Grid2";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-// import { urlParameters } from "../HOC/CustomFunctions/urlParameters";
-// import {
-//   LIST_LOOKUP_ENTRIES_DROPDOWN,
-// } from "../../GlobalsQuery/ListDropdown/ListDropdown";
-// import ControlMUItextField from "../HOC/MUI/ControlMUItextField";
-
-// import { MultipleAutocomplete } from "../HOC/MUI/MultipleAutocomplete";
-import moment from "moment";
-// import MUIDateRangeCustom from "../HOC/MUI/MUIDateRangeCustom";
-// import { TableCellColor } from "../HOC/CustomComponents/TableCellColor";
-// import ExportShipments from "./ExportShipments";
-// import { RootStyleList, classes } from "../../GlobalStyles/ListStyle";
-// import CustomExportExcel from "../HOC/CustomComponents/CustomExportExcel";
 import { FixedTableCell } from "../../Component/HOC/CustomComponents/FixedTableCell";
 import MUITablePagination from "../../Component/HOC/MUI/TablePagination/MUITablePagination";
 import useWidth from "../../useWidth";
@@ -33,9 +11,14 @@ import ControlMUItextField from "../../Component/HOC/MUI/ControlMUItextField";
 import ListWrapper from "../../Component/CustomComponents/ListWrapper/ListWrapper";
 import { classes, RootStyleList } from "../../GlobalStyles/ListStyle";
 import LayoutWithDrawer from "../LayoutWithDrawo";
-import { Link, router } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import CellLink from "../../Component/HOC/CustomComponents/CellLink";
 
 const ShipmentsList = ({ shipments }) => {
+    const { props } = usePage();
+    const loading = !props.shipments;
+    console.log("!props.shipments" + loading);
+
     const { t } = useTranslation();
     const screenWidth = useWidth();
     //   const history = useHistory();
@@ -114,6 +97,13 @@ const ShipmentsList = ({ shipments }) => {
             id: "filterList",
             action: toggleDrawer(filterAnchor, !drawerState[filterAnchor]),
         },
+        {
+            id: "add",
+            title: "createNew",
+            action: () => router.get("/shipments/save"),
+            icon: Add,
+            permission: "shipping.shipment.create",
+        },
     ];
 
     return (
@@ -122,9 +112,9 @@ const ShipmentsList = ({ shipments }) => {
                 <ListWrapper
                     drawerState={drawerState[filterAnchor]}
                     icons={icons}
-                    // path={props.match.ph}
+                    path={shipments?.path}
                     empty={listShipments?.length === 0}
-                    loading={false}
+                    loading={loading}
                     filters={
                         <Grid
                             container
@@ -218,6 +208,11 @@ const ShipmentsList = ({ shipments }) => {
                                             key={index}
                                             className={classes.tableRow}
                                         >
+                                            <CellLink
+                                                pathname={`/shipments/${row?.id}`}
+                                            >
+                                                {row?.id}
+                                            </CellLink>
                                             <FixedTableCell>
                                                 {row.price}
                                             </FixedTableCell>

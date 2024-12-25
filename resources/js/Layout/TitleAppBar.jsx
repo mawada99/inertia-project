@@ -1,11 +1,10 @@
-import { Box, Toolbar } from '@mui/material'
-import React from 'react'
+import { Box, Toolbar } from "@mui/material";
+import React from "react";
 import { styled } from "@mui/material/styles";
 
 import PropTypes from "prop-types";
-import BreadcrumbsWidget from './Breadcrumbs';
-
-
+import BreadcrumbsWidget from "./Breadcrumbs";
+// import BreadcrumbsWidget from './Breadcrumbs';
 
 const Root = styled(Toolbar)(({ theme }) => ({
     // borderBottom: "1px #ccd1d6 solid",
@@ -21,19 +20,27 @@ const Root = styled(Toolbar)(({ theme }) => ({
 }));
 
 const TitleAppBar = (props) => {
-    const { path, type } = props
+    const { path, type } = props;
     return (
-        <Root variant="dense" id='headerPage--'>
+        <Root variant="dense" id="headerPage--">
             <Box>
-                <BreadcrumbsWidget path={path} type={type}  />
+                <BreadcrumbsWidget path={path} type={type} />
                 {/* {props.title} */}
             </Box>
-            {props.children && <Box sx={{ textAlign: "end", display: "flex", alignItems: "center" }}>
-                {props.children}
-            </Box>}
+            {props.children && (
+                <Box
+                    sx={{
+                        textAlign: "end",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                >
+                    {props.children}
+                </Box>
+            )}
         </Root>
-    )
-}
+    );
+};
 
 TitleAppBar.propTypes = {
     path: PropTypes.any,
@@ -41,4 +48,4 @@ TitleAppBar.propTypes = {
     icons: PropTypes.any,
 };
 
-export default TitleAppBar
+export default TitleAppBar;

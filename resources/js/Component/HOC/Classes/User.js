@@ -1,43 +1,47 @@
 import { Globals } from "./Globals";
 
 export class User {
-  constructor(userData) {
-    this.id = userData.id;
-    this.member = userData.member;
-    this.account = userData.account;
-    this.username = userData.username;
-    this.isSuper = userData.isSuper;
-    this.userBranches = userData.userBranches;
-    this.roles = userData.roles;
-    this.glAccount = userData.glAccount;
-    this.permissions = userData.permissions.map(
-      (permission) => permission.slug
-    );
-  }
+    constructor(userData) {
+        console.log(userData);
 
-  hasPermission(permission) {
-    if (this.isSuper) return true;
+        this.id = userData.id;
+        // this.member = userData.member;
+        // this.account = userData.account;
 
-    if (Array.isArray(permission))
-      return this.permissions.some((i) => permission?.includes(i));
+        // this.isSuper = userData.isSuper;
+        // this.userBranches = userData.userBranches;
+        // this.roles = userData.roles;
+        // this.glAccount = userData.glAccount;
+        this.email = userData.email;
+        this.name = userData.name;
+        this.permissions = userData.permissions.map(
+            (permission) => permission.slug
+        );
+    }
 
-    return this.permissions.includes(permission);
-  }
+    hasPermission(permission) {
+        if (this.isSuper) return true;
 
-  canAccessBranch(branchId) {
-    if (this.hasPermission("core.branch.use_any")) return true;
+        if (Array.isArray(permission))
+            return this.permissions.some((i) => permission?.includes(i));
 
-    return this.userBranches.some((i) => i.branch.id === branchId);
-  }
+        return this.permissions.includes(permission);
+    }
 
-  get warehousing() {
-    const customerWarehousing =
-      this.account == null || this.account.warehousing;
-    const warehousing = Globals?.settings?.warehousing;
-    return (
-      warehousing &&
-      this.hasPermission("shipping.product.list") &&
-      customerWarehousing
-    );
-  }
+    // canAccessBranch(branchId) {
+    //     if (this.hasPermission("core.branch.use_any")) return true;
+
+    //     return this.userBranches.some((i) => i.branch.id === branchId);
+    // }
+
+    // get warehousing() {
+    //     const customerWarehousing =
+    //         this.account == null || this.account.warehousing;
+    //     const warehousing = Globals?.settings?.warehousing;
+    //     return (
+    //         warehousing &&
+    //         this.hasPermission("shipping.product.list") &&
+    //         customerWarehousing
+    //     );
+    // }
 }
