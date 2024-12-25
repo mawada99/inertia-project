@@ -47,14 +47,14 @@ const Footer = (props) => {
             <footer className={classes.root}>
                 <Grid container justifyContent="center">
                     <Grid className={classes.margin}>
-                        {t("home:footerCopyright")}. {t("home:poweredBy")}{" "}
+                        {/* {t("home:footerCopyright")}. {t("home:poweredBy")}{" "} */}
                         <a
                             className={classes.link}
                             target="_blank"
                             rel="noopener noreferrer"
                             href="http://accuratess.com"
                         >
-                            {t("home:accurate")}
+                            {/* {t("home:accurate")} */}
                         </a>
                     </Grid>
                     <Grid className={classes.margin}>

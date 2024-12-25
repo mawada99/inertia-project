@@ -18,7 +18,8 @@ import { useTranslation } from "react-i18next";
 
 import { SecuredNavLink } from "../Component/HOC/CustomComponents/Secured";
 import HFWraper from "./WraperHeaderFooter";
-// import { GoContainer } from "react-icons/go";
+import ReorderIcon from "@mui/icons-material/Reorder";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const PREFIX = "NavDrawer";
 
@@ -166,12 +167,12 @@ const NavDrawer = (props) => {
         {
             pathname: "/home",
             exact: true,
-            icon: "ss",
+            icon: DashboardIcon,
             primary: t("dashboard"),
         },
         {
             sectionName: "shipments",
-            icon: "ss",
+            icon: ReorderIcon,
             primary: t("shipments"),
             children: [
                 {

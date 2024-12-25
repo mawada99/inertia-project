@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import TablePaginationActions from "./TablePaginationActions";
 import { styled } from "@mui/material/styles";
-// import config from "../../../../"";
+import { router } from "@inertiajs/react";
 
 const language = ["ar", "en", "ku"];
 const MUITablePagination = (props) => {
@@ -15,6 +15,7 @@ const MUITablePagination = (props) => {
         onRowsPerPageChange,
         rowsPerPageOptions,
         disableLastPage,
+        shipments, // Pass this as a prop to get pagination URLs
     } = props;
 
     const PREFIX = "ListPickups";
@@ -40,6 +41,23 @@ const MUITablePagination = (props) => {
     const lang = localStorage.getItem("i18nextLng")
         ? localStorage.getItem("i18nextLng")
         : Languages[0];
+
+    // Handle page change with Inertia
+    const handleChangePage = (event, newPage) => {
+        if (newPage === 0) {
+            // First page button clicked
+            shipments?.first_page_url && router.get(shipments.first_page_url);
+        } else if (newPage === Math.ceil(count / rowsPerPage) - 1) {
+            // Last page button clicked
+            shipments?.last_page_url && router.get(shipments.last_page_url);
+        } else if (newPage > page) {
+            // Next page button clicked
+            shipments?.next_page_url && router.get(shipments.next_page_url);
+        } else if (newPage < page) {
+            // Previous page button clicked
+            shipments?.prev_page_url && router.get(shipments.prev_page_url);
+        }
+    };
     return (
         <Root>
             <TablePagination
@@ -59,14 +77,13 @@ const MUITablePagination = (props) => {
                                   count !== -1 ? count : ` أكثر من${to}`
                               }`
                 }
-                // labelRowsPerPage={lang === "en" ? undefined : "عدد الصفوف في الصفحة"}
                 labelRowsPerPage={""}
                 rowsPerPageOptions={rowsPerPageOptions ?? [20, 50, 100]}
                 component="div"
-                count={count ? count : 20}
+                count={count ?? 20}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onPageChange={onPageChange}
+                onPageChange={handleChangePage} // Use the custom handler
                 onRowsPerPageChange={onRowsPerPageChange}
                 ActionsComponent={
                     disableLastPage ? undefined : TablePaginationActions
@@ -82,6 +99,7 @@ MUITablePagination.propTypes = {
     page: PropTypes.number,
     onPageChange: PropTypes.func,
     onRowsPerPageChange: PropTypes.func,
+    shipments: PropTypes.object, // Expect shipment URLs for pagination
 };
 
 export default MUITablePagination;

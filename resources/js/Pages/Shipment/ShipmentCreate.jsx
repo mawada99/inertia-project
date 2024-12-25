@@ -139,7 +139,7 @@ const ShipmentForm = ({ csrf_token, shipment }) => {
                             control={control}
                             errors={errors}
                             name={"payment_type"}
-                            label={t("payment_type")}
+                            label={t("paymentType")}
                         />
                     </Grid>
                 </Grid>

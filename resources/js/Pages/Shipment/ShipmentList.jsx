@@ -33,6 +33,7 @@ import ControlMUItextField from "../../Component/HOC/MUI/ControlMUItextField";
 import ListWrapper from "../../Component/CustomComponents/ListWrapper/ListWrapper";
 import { classes, RootStyleList } from "../../GlobalStyles/ListStyle";
 import LayoutWithDrawer from "../LayoutWithDrawo";
+import { Link, router } from "@inertiajs/react";
 
 const ShipmentsList = ({ shipments }) => {
     const { t } = useTranslation();
@@ -40,10 +41,6 @@ const ShipmentsList = ({ shipments }) => {
     //   const history = useHistory();
     const [refetch, setrefetch] = useState(true);
     const urlQuery = urlParameters(window.location.search);
-    const validUrlParameters = Object.keys(urlQuery).length !== 0;
-    const [rowsPerPage, setRowsPerPage] = useState(
-        urlQuery["rowsPerPage"] ?? 20
-    );
     const filterAnchor = screenWidth === "xs" ? "bottom" : "left";
     const [drawerState, setDrawerState] = React.useState({
         top: true,
@@ -62,7 +59,7 @@ const ShipmentsList = ({ shipments }) => {
 
     const [search, setSearch] = useState();
 
-    const listShipments = shipments;
+    const listShipments = shipments?.data;
 
     const pushUrlSearch = (param) => {
         const queryParams = [];
@@ -127,27 +124,15 @@ const ShipmentsList = ({ shipments }) => {
         }
     };
 
-    const handleChangePage = (event, newPage) => {
-        pushUrlSearch({
-            ...urlQuery,
-            page: newPage,
-            rowsPerPage: rowsPerPage,
-        });
-
-        // setSearch((prev) => ({ ...prev, page: newPage }));
-    };
+    const handleChangePage = (event, newPage) => {};
 
     const handleChangeRowsPerPage = (event) => {
-        pushUrlSearch({
-            ...urlQuery,
-            page: 0,
-            rowsPerPage: +event.target.value,
+        const newRowsPerPage = parseInt(event.target.value, 10);
+        // Include the selected rowsPerPage as a query parameter in the request
+        router.get(shipments.first_page_url, {
+            perPage: newRowsPerPage,
         });
-
-        setRowsPerPage(+event.target.value);
-        // setSearch((prev) => ({ ...prev, page: 0 }));
     };
-
     const icons = [
         {
             id: "filterList",
@@ -248,7 +233,7 @@ const ShipmentsList = ({ shipments }) => {
                             name: "type",
                         },
                         {
-                            name: "payment_type",
+                            name: "paymentType",
                         },
                     ]}
                     tableBody={
@@ -263,11 +248,6 @@ const ShipmentsList = ({ shipments }) => {
                                             key={index}
                                             className={classes.tableRow}
                                         >
-                                            {/* <TableCellColor align="left" status={row?.status} />
-                    <FixedTableCell>
-                      {dateFormat(row?.shipmentDate)}
-                    </FixedTableCell>
-                   */}
                                             <FixedTableCell>
                                                 {row.price}
                                             </FixedTableCell>
@@ -284,11 +264,13 @@ const ShipmentsList = ({ shipments }) => {
                     }
                     pagination={
                         <MUITablePagination
-                            count={2}
-                            rowsPerPage={rowsPerPage}
-                            page={0}
+                            count={shipments.total}
+                            rowsPerPage={shipments?.per_page}
+                            page={shipments?.current_page - 1}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
+                            shipments={shipments}
+                            rowsPerPageOptions={[10, 20, 50]}
                         />
                     }
                 />
