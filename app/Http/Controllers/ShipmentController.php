@@ -8,28 +8,22 @@ use App\Models\Shipment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->get('perPage', 15);
+
         /** @var User */
         $user = Auth::user();
 
-        $shipments = $user->isAdmin ? Shipment::all() : $user->shipments;
+        $shipments = $user->isAdmin ? Shipment::paginate($perPage)->withQueryString() : $user->shipments()->paginate($perPage)->withQueryString();
+
         return Inertia::render('Shipment/ShipmentList', [
             'can' => Gate::allows('create', Shipment::class),
-            'shipments' => $shipments->map(function ($shipment) {
-                return [
-                    'id' => $shipment->id,
-                    'price' => $shipment->price,
-                    'type' => $shipment->type,
-                    'payment_method' => $shipment->payment_type,
-                    'can' => [
-                        'update_shipment' => Gate::allows('update', [Shipment::class, $shipment]),
-                    ],
-                ];
-            }),
+            'shipments' => $shipments,
         ]);
     }
 

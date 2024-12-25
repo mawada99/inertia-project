@@ -3,7 +3,6 @@
 use App\Http\Controllers\Auth\AuthContoller;
 use App\Http\Controllers\HomeContoller;
 use App\Http\Controllers\ShipmentController;
-use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
