@@ -38,7 +38,7 @@ export const RootStyleList = styled(Grid)(({ theme }) => ({
         padding: theme.spacing(1),
         width: "100%",
         margin: 0,
-        flexDirection: "column",
+        flexDirection: "row",
     },
     [`& .${classes.filterForm}`]: {
         overflowY: "auto",

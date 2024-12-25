@@ -56,27 +56,16 @@ const ShipmentsList = ({ shipments }) => {
         setValue,
         watch,
     } = useForm();
-
-    const [search, setSearch] = useState();
+    useEffect(() => {
+        urlQuery["type"] !== "" && setValue("type", urlQuery["type"]);
+        urlQuery["price"] !== "" && setValue("price", urlQuery["price"]);
+        urlQuery["payment_type"] !== "" &&
+            setValue("payment_type", urlQuery["payment_type"]);
+        return () => {};
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const listShipments = shipments?.data;
-
-    const pushUrlSearch = (param) => {
-        const queryParams = [];
-        for (const i in param) {
-            encodeURIComponent(param[i]) &&
-                queryParams.push(
-                    encodeURIComponent(i) + "=" + encodeURIComponent(param[i])
-                );
-        }
-        const queryString = queryParams.join("&");
-
-        // const url = history.createHref({
-        //   pathname: `/admin/shipments`,
-        //   search: "?" + queryString,
-        // });
-        // windowUrl(url);
-    };
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (
@@ -93,35 +82,22 @@ const ShipmentsList = ({ shipments }) => {
     };
 
     const onSubmit = (data) => {
-        filterAnchor === "bottom" &&
-            setDrawerState({ ...drawerState, [filterAnchor]: false });
-        refetch ? setrefetch(false) : setrefetch(true);
-        let handledData = {};
+        console.log("Before filtering:", data);
 
-        for (const key in handledData) {
-            if (
-                handledData[key] === undefined ||
-                handledData[key] === "" ||
-                handledData[key] === null ||
-                handledData[key].length === 0
-            ) {
-                delete handledData[key];
-            }
-        }
-        pushUrlSearch({
-            ...handledData,
-            rowsPerPage: rowsPerPage,
+        // Remove empty or undefined fields
+        const filteredData = Object.fromEntries(
+            Object.entries(data).filter(
+                ([key, value]) =>
+                    value !== undefined && value !== null && value !== ""
+            )
+        );
+
+        console.log("After filtering:", filteredData);
+
+        // Send only the filled filter values
+        router.get(shipments.first_page_url, {
+            ...filteredData,
         });
-
-        // setSearch((prev) => ({
-        //     ...handledData,
-        //     refetch: !prev.refetch,
-        // }));
-        for (const key in handledData) {
-            if (handledData[key] === null) {
-                delete handledData[key];
-            }
-        }
     };
 
     const handleChangePage = (event, newPage) => {};
@@ -138,16 +114,6 @@ const ShipmentsList = ({ shipments }) => {
             id: "filterList",
             action: toggleDrawer(filterAnchor, !drawerState[filterAnchor]),
         },
-        // {
-        //   id: "add",
-        //   action: () => pushUrl(props, `/admin/shipments/create`),
-        //   permission: "freight.shipment.create",
-        // },
-        // {
-        //     id: "export",
-        //     action: openExportDialog,
-        //     disabled: !Boolean(data),
-        // },
     ];
 
     return (
@@ -172,38 +138,42 @@ const ShipmentsList = ({ shipments }) => {
                                 spacing={1}
                                 className={classes.filterField}
                             >
-                                <Grid sm={12} alignItems="flex-start">
+                                <Grid
+                                    sm={12}
+                                    spacing={1}
+                                    alignItems="flex-start"
+                                >
                                     <ControlMUItextField
                                         control={control}
                                         errors={errors}
-                                        name={"code"}
-                                        label={t("code")}
+                                        name={"price"}
+                                        label={t("price")}
                                     />
                                 </Grid>
-                                {/* <Grid sm={12} alignItems="flex-start">
-                <MultipleAutocomplete
-                  valueKey="code"
-                  multiple
-                  hideCode={true}
-                  control={control}
-                  errors={errors}
-                  name={"status"}
-                  label={t("status")}
-                  parseData={(data) => parseData(data)}
-                  variables={{ input: { code: "FR_SHIPMENT_STATUS" } }}
-                  query={LIST_LOOKUP_ENTRIES_DROPDOWN.query}
-                  defaultValue={autocompleteValues.status}
-                  skip={noData}
-                />
-              </Grid> */}
-                                {/* <Grid sm={12} alignItems="flex-start">
-                <MUIDateRangeCustom
-                  startText={t("createdAt")}
-                  value={createdDate}
-                  onChangeValue={(value) => setCreatedDate(value)}
-                  resetDate={resetCreatedDate}
-                />
-              </Grid> */}
+                                <Grid
+                                    sm={12}
+                                    spacing={1}
+                                    alignItems="flex-start"
+                                >
+                                    <ControlMUItextField
+                                        control={control}
+                                        errors={errors}
+                                        name={"type"}
+                                        label={t("type")}
+                                    />
+                                </Grid>
+                                <Grid
+                                    sm={12}
+                                    spacing={1}
+                                    alignItems="flex-start"
+                                >
+                                    <ControlMUItextField
+                                        control={control}
+                                        errors={errors}
+                                        name={"payment_type"}
+                                        label={t("paymentType")}
+                                    />
+                                </Grid>
                             </Grid>
                             <Grid
                                 container
