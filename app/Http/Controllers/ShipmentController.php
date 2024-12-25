@@ -19,7 +19,7 @@ class ShipmentController extends Controller
         $shipments = $this->getShipments($request)->paginate($perPage);
 
         return Inertia::render('Shipment/ShipmentList', [
-            'can' => Gate::allows('create', Shipment::class),
+            'can' => Gate::allows('viewAny', Shipment::class),
             'shipments' => $shipments,
         ]);
     }

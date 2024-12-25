@@ -9,7 +9,8 @@ class ShipmentPolicy
 {
     public function viewAny(User $user)
     {
-        return $user->isAdmin;
+        // TODO: Once user has this permission, user can see this page
+        return $user->isAdmin || $user->shipments()->count() > 0;
     }
 
     public function create(User $user)
