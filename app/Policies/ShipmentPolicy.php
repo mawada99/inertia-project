@@ -9,17 +9,17 @@ class ShipmentPolicy
 {
     public function viewAny(User $user)
     {
-        // TODO: Once user has this permission, user can see this page
-        return $user->isAdmin || $user->shipments()->count() > 0;
+        return $user->hasPermission('shipping.shipment.list');
     }
 
     public function create(User $user)
     {
-        return $user->isAdmin;
+        return $user->hasPermission('shipping.shipment.create');
     }
 
     public function update(User $user, Shipment $shipment)
     {
-        return $user->id == $shipment->user->id || $user->isAdmin;
+        return $user->hasPermission('shipping.shipment.update')
+            && ($user->id == $shipment->user->id || $user->isAdmin);
     }
 }
