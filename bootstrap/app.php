@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureUserPermitted;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
             ])
             ->web(append: [
                 HandleInertiaRequests::class,
+            ])
+            ->alias([
+                'check-permission' => EnsureUserPermitted::class,
             ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
