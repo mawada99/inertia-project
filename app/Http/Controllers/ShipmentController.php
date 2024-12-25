@@ -14,7 +14,7 @@ class ShipmentController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->get('perPage', 15);
+        $perPage = $request->get('perPage', 20);
 
         /** @var User */
         $user = Auth::user();
