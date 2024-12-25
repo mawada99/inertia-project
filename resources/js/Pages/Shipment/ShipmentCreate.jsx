@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Collapse, Stack, Box, Alert, Button, Grid } from "@mui/material";
 
 import { useForm } from "react-hook-form";
@@ -41,7 +41,9 @@ import { AddCircleOutline } from "@mui/icons-material";
 import LayoutWithDrawer from "../LayoutWithDrawo";
 import { router } from "@inertiajs/react";
 
-const ShipmentForm = ({ csrf_token }) => {
+const ShipmentForm = ({ csrf_token, shipment }) => {
+    console.log(shipment);
+
     // const pathURL = props.match.path;
     const { t } = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
@@ -77,12 +79,23 @@ const ShipmentForm = ({ csrf_token }) => {
         },
     });
     const { errors } = formState;
+    useEffect(() => {
+        if (shipment) {
+            setValue("id", shipment.id);
+
+            setValue("price", shipment.price);
+            setValue("type", shipment.type);
+            setValue("payment_type", shipment.payment_type);
+        }
+        return () => {};
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSubmit = (data) => {
         console.log("data");
         console.log(data);
         parseInt(data.price);
-        router.post("/shipments/create", data, {
+        router.post("/shipments/save", data, {
             onError: (serverErrors) => {
                 Object.entries(serverErrors).forEach(([key, value]) => {
                     setError(key, { type: "server", message: value });

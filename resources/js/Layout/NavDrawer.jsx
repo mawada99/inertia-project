@@ -181,7 +181,7 @@ const NavDrawer = (props) => {
                     // permission: "freight.shipment.list",
                 },
                 {
-                    pathname: "/shipments/create",
+                    pathname: "/shipments/save",
                     exact: true,
                     primary: t("createShipment"),
                     // permission: "freight.shipment.create",
