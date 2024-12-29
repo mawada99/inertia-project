@@ -7,7 +7,6 @@ use App\Models\Shipment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shipment\ListShipmentsRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Shipment\ShipmentRequest;
 
 class ShipmentController extends Controller
@@ -65,7 +64,8 @@ class ShipmentController extends Controller
 
         return redirect()->route('home');
     }
-    public function viewShipment(?Shipment $shipment = null)
+
+    public function viewShipment(Shipment $shipment)
     {
         return Inertia::render('Shipment/ShipmentView', [
             'shipment' => $shipment,

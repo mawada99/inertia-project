@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shipments', [ShipmentController::class, 'index'])->middleware("check-permission:shipping.shipment.list");
     Route::get('/shipments/save/{shipment?}', [ShipmentController::class, 'saveForm'])->middleware('check-permission:shipping.shipment.create|shipping.shipment.update');
     Route::post('/shipments/save', [ShipmentController::class, 'save'])->middleware('check-permission:shipping.shipment.create|shipping.shipment.update');
-    Route::get('/shipments/{shipment?}', [ShipmentController::class, 'viewShipment'])->middleware("check-permission:shipping.shipment.list");
+    Route::get('/shipments/{shipment}', [ShipmentController::class, 'viewShipment'])->middleware('can:view,shipment');
 });
 
 Route::group(['middleware' => 'auth'], function () {

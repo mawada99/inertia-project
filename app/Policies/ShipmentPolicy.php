@@ -22,4 +22,9 @@ class ShipmentPolicy
         return $user->hasPermission('shipping.shipment.update')
             && ($user->id == $shipment->user->id || $user->isAdmin);
     }
+
+    public function view(User $user, Shipment $shipment)
+    {
+        return $user->id === $shipment->user->id;
+    }
 }

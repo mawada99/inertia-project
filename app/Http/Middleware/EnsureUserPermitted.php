@@ -21,6 +21,6 @@ class EnsureUserPermitted
         if ($request->user()->hasPermission($permissions))
             return $next($request);
 
-        return back(401);
+        return abort(401);
     }
 }
