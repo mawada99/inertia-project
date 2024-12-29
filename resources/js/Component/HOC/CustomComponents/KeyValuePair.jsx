@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import { Typography, Grid } from "@mui/material";
+
 const PREFIX = "KeyValuePair";
 
 const classes = {
@@ -23,10 +24,10 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
         wordBreak: "break-word",
         whiteSpace: "pre-line",
         overflowWrap: "break-word",
-        MsWordBreak: "break-word",
-        MsHyphens: "auto",
-        MozHyphens: "auto",
-        WebkitHyphens: "auto",
+        msWordBreak: "break-word",
+        msHyphens: "auto",
+        mozHyphens: "auto",
+        webkitHyphens: "auto",
         hyphens: "auto",
     },
 }));
@@ -42,6 +43,7 @@ export const KeyValuePair = (props) => {
             sm={sm ?? 6}
             md={md ?? 3}
             lg={lg}
+            item // Add this item prop to ensure it's treated as a grid item
             className={classes.root}
         >
             <Typography
@@ -52,19 +54,9 @@ export const KeyValuePair = (props) => {
             >
                 {title}
             </Typography>
-            {/* <Typography
-        className={classes.value}
-        sx={valueStyle}
-        variant="body1"
-        dir={dir}
-      >
-        {value !== null ? value : null}
-      </Typography> */}
-            {
-                <div className={classes.value} sx={valueStyle} dir={dir}>
-                    {value !== null ? value : null}
-                </div>
-            }
+            <div className={classes.value} style={valueStyle} dir={dir}>
+                {value !== null ? value : null}
+            </div>
             {props.children}
         </StyledGrid>
     );

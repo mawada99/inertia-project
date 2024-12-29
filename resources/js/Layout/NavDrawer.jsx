@@ -148,8 +148,6 @@ const Root = styled("div")(({ theme }) => ({
 }));
 
 const NavDrawer = (props) => {
-    console.log(Globals?.user);
-    console.log("ggg");
     const { navDrawer, handleDrawerClose, drawerAnchor, top } = props;
     let collapseOpened = useRef(true);
     const { t } = useTranslation();
@@ -229,10 +227,9 @@ const NavDrawer = (props) => {
                                         to={{ pathname: link.pathname }}
                                         activeClassName={classes.listItemFocus}
                                         className={classes.navLink}
-                                        exact={link.exact}
+                                        // button={false}
                                     >
-                                        <ListItem
-                                            button
+                                        <ListItemButton
                                             onClick={() => {
                                                 drawerAnchor === "bottom" &&
                                                     handleDrawerClose();
@@ -247,7 +244,7 @@ const NavDrawer = (props) => {
                                                 disableTypography={true}
                                                 primary={link.primary}
                                             />
-                                        </ListItem>
+                                        </ListItemButton>
                                     </SecuredNavLink>
                                 )
                             );
@@ -299,8 +296,6 @@ const NavDrawer = (props) => {
                                             unmountOnExit
                                         >
                                             {link.children.map((child, i) => {
-                                                console.log("child", child);
-
                                                 return (
                                                     <SecuredNavLink
                                                         key={i}
@@ -315,19 +310,19 @@ const NavDrawer = (props) => {
                                                         activeClassName={
                                                             classes.listItemFocus
                                                         }
-                                                        exact={child.exact}
                                                         className={
                                                             classes.navLink
                                                         }
                                                         permission={
                                                             child.permission
                                                         }
+                                                        // button={false}
                                                     >
-                                                        <ListItem
+                                                        <ListItemButton
                                                             className={
                                                                 classes.nestedListItem
                                                             }
-                                                            button
+                                                            // button
                                                             onClick={() => {
                                                                 child?.action &&
                                                                     child.action();
@@ -354,7 +349,7 @@ const NavDrawer = (props) => {
                                                                     child.primary
                                                                 }
                                                             />
-                                                        </ListItem>
+                                                        </ListItemButton>
                                                     </SecuredNavLink>
                                                 );
                                             })}

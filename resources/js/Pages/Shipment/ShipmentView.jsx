@@ -16,8 +16,6 @@ const ShipmentView = ({ shipment }) => {
     const { url } = usePage();
     const roleId = shipment?.id;
     const loading = !shipment;
-    console.log(shipment);
-
     const icons = [
         {
             id: "edit",
@@ -45,7 +43,7 @@ const ShipmentView = ({ shipment }) => {
             <RootStyleView spacing={2} p={2} justifyContent="center">
                 <Paper container className={classesView.paper} component={Grid}>
                     <KeyValuePair title={t("price")} value={shipment?.price} />
-                    <KeyValuePair title={t("type")} value={shipment?.name} />
+                    <KeyValuePair title={t("type")} value={shipment?.type} />
                     <KeyValuePair
                         title={t("paymentType")}
                         value={shipment?.payment_type}

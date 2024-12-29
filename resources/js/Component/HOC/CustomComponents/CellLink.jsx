@@ -18,7 +18,6 @@ const CellLink = (props) => {
     const {
         pathname,
         hash,
-        key,
         state,
         search,
         onClick,
@@ -41,7 +40,6 @@ const CellLink = (props) => {
                     to={{
                         pathname,
                         hash,
-                        key,
                         state,
                         search,
                     }}

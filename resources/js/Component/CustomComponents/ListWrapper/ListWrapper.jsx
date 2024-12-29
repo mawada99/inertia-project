@@ -221,7 +221,6 @@ const ListWrapper = (props) => {
     const screenWidth = useWidth();
 
     const filterAnchor = screenWidth === "xs" ? "bottom" : "left";
-    console.log("sedd" + loading);
     return (
         <Root>
             {(path || icons) && (
@@ -270,13 +269,10 @@ const ListWrapper = (props) => {
                     >
                         {customFilters && customFilters}
                         {loading ? (
-                            (console.log("sedd" + loading),
-                            (
-                                <FullScreenLoading
-                                    height={customFilters ? "auto" : "100%"}
-                                    className={classes.backgroundLoading}
-                                />
-                            ))
+                            <FullScreenLoading
+                                height={customFilters ? "auto" : "100%"}
+                                className={classes.backgroundLoading}
+                            />
                         ) : (
                             <Box
                                 height={"100%"}

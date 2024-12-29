@@ -1,0 +1,43 @@
+{
+  "app": {
+    "basePath": "/",
+    "siteTitle": "Accurate | Fastest Courier Service",
+    "landingPage": true,
+    "multiCountry": false,
+    "languages": [
+      "ar",
+      "en",
+      "ku"
+    ],
+    "pageSize": 20
+  },
+  "theme": {
+    "primaryColorDark": "#2f7cc8",
+    "primaryColorLight": "#003366"
+  },
+  "homeSections": [
+    "banner",
+    "track",
+    "about",
+    "services",
+    "features",
+    "statistics",
+    "contact"
+  ],
+  "aboutPictures": [
+    "about.png"
+  ],
+  "socialLinks": {
+    "facebook": "#",
+    "messenger": "#",
+    "whatsapp": "#",
+    "linkedIn": "#",
+    "instgram": "#",
+    "youtube": "#",
+    "slack": "#"
+  },
+  "mobileAppLinks": {
+    "android": "https://play.google.com/store/apps/details?id=com.accurate.shipping.client",
+    "ios": "https://apps.apple.com/eg/app/accurate-logistics-business/id1550900536"
+  }
+}

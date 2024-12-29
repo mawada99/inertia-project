@@ -36,8 +36,6 @@ function withUserDataLoader(Component) {
     const UserDataLoader = (props) => {
         const { t } = useTranslation();
         const { user } = usePage().props;
-        console.log(user);
-        console.log("user");
         Globals.setUser(new User(user));
         const [loadingFinshed, setLoadingFinshed] = useState(true);
         const [loadingErorr, setLoadingError] = useState(true);

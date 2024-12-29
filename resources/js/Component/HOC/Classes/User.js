@@ -2,8 +2,6 @@ import { Globals } from "./Globals";
 
 export class User {
     constructor(userData) {
-        console.log(userData);
-
         this.id = userData.id;
         // this.member = userData.member;
         // this.account = userData.account;

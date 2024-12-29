@@ -1,34 +1,36 @@
-import React from "react";
-
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Link } from "@inertiajs/react";
-import { Fragment } from "react";
-import { Box, Typography } from "@mui/material";
-import { LockOutlined } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
+import { Link, usePage } from "@inertiajs/react";
+import clsx from "clsx";
+// import { StateNavLink } from "./StateNavLink";
 import { Globals } from "../Classes/Globals";
-
 export const StateNavLink = (props) => {
-    const { to, staticContext, ...restProps } = props;
+    const { to, className, activeClassName, ...restProps } = props; // Filter 'button'
+    const { url } = usePage();
+
     return (
         <Link
             {...restProps}
-            // href={{
-            //     ...to,
-            //     state: {
-            //         prevUrl: `${props?.match.url}${window.location.search}`,
-            //         ...to?.state,
-            //     },
-            // }}
             href={to?.pathname}
+            className={clsx(
+                className,
+                url === to?.pathname ? activeClassName : ""
+            )}
         >
             {props.children}
         </Link>
     );
 };
 
+StateNavLink.propTypes = {
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+    className: PropTypes.string,
+    activeClassName: PropTypes.string,
+    children: PropTypes.node,
+    // Optional boolean prop
+};
 export const SecuredNavLink = (props) => {
-    const { permission, hideLink, show, ...restProps } = props;
+    const { permission, hideLink, show, button, ...restProps } = props; // Filter 'button'
 
     if (
         (permission !== undefined && !Globals.user.hasPermission(permission)) ||
@@ -48,11 +50,10 @@ SecuredNavLink.propTypes = {
     permission: PropTypes.string,
     show: PropTypes.bool,
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-    activeClassName: PropTypes.any,
-    className: PropTypes.any,
-    exact: PropTypes.bool,
+    activeClassName: PropTypes.string,
+    className: PropTypes.string,
+    hideLink: PropTypes.bool,
 };
-
 export const Can = (props) => {
     const { permission, showException } = props;
     const { t } = useTranslation();

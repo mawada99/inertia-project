@@ -897,19 +897,19 @@ const BreadcrumbsWidget = (props) => {
             case "shipments":
                 URLObj.push({
                     name: "shipmentList",
-                    path: `/admin/shipments`,
+                    path: `/shipments`,
                 });
                 if (URLArray.some((e) => e.includes("id") || !isNaN(e))) {
                     URLObj.push({
                         name: "details",
                     });
                 }
-                if (URLArray.some((e) => e === "create")) {
+                if (URLArray.some((e) => e === "save")) {
                     URLObj.push({
                         name: "create",
                     });
                 }
-                if (URLArray.some((e) => e === "edit")) {
+                if (URLArray.some((e) => e === "id")) {
                     URLObj.pop();
                     URLObj.push({
                         name: "update",

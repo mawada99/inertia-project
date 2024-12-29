@@ -17,19 +17,12 @@ import CellLink from "../../Component/HOC/CustomComponents/CellLink";
 const ShipmentsList = ({ shipments }) => {
     const { props } = usePage();
     const loading = !props.shipments;
-    console.log("!props.shipments" + loading);
-
     const { t } = useTranslation();
     const screenWidth = useWidth();
-    //   const history = useHistory();
-    const [refetch, setrefetch] = useState(true);
-    const urlQuery = urlParameters(window.location.search);
-    const filterAnchor = screenWidth === "xs" ? "bottom" : "left";
-    const [drawerState, setDrawerState] = React.useState({
-        top: true,
-        left: screenWidth === "xs" ? false : true,
-        bottom: screenWidth === "xs" ? false : true,
-        right: screenWidth === "xs" ? false : true,
+
+    const [drawerState, setDrawerState] = useState({
+        left: screenWidth !== "xs",
+        bottom: screenWidth === "xs",
     });
 
     const {
@@ -37,72 +30,47 @@ const ShipmentsList = ({ shipments }) => {
         control,
         formState: { errors },
         setValue,
-        watch,
     } = useForm();
+
     useEffect(() => {
-        urlQuery["type"] !== "" && setValue("type", urlQuery["type"]);
-        urlQuery["price"] !== "" && setValue("price", urlQuery["price"]);
-        urlQuery["payment_type"] !== "" &&
-            setValue("payment_type", urlQuery["payment_type"]);
-        return () => {};
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        const urlQuery = urlParameters(window.location.search);
+        setValue("type", urlQuery["type"] || "");
+        setValue("price", urlQuery["price"] || "");
+        setValue("payment_type", urlQuery["payment_type"] || "");
+    }, [setValue]);
 
     const listShipments = shipments?.data;
 
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (
-            event &&
-            (event.type === "keydown" || event.type === "submit") &&
-            (event.type === "submit" ||
-                event.key === "Tab" ||
-                event.key === "Shift")
-        ) {
-            return;
-        }
-
-        setDrawerState({ ...drawerState, [anchor]: open });
+    const toggleDrawer = (anchor, open) => () => {
+        setDrawerState((prev) => ({ ...prev, [anchor]: open }));
     };
 
     const onSubmit = (data) => {
-        console.log("Before filtering:", data);
-
-        // Remove empty or undefined fields
         const filteredData = Object.fromEntries(
-            Object.entries(data).filter(
-                ([key, value]) =>
-                    value !== undefined && value !== null && value !== ""
-            )
+            Object.entries(data).filter(([, value]) => value)
         );
-
-        console.log("After filtering:", filteredData);
-
-        // Send only the filled filter values
-        router.get(shipments.first_page_url, {
-            ...filteredData,
-        });
+        router.get(shipments.first_page_url, filteredData);
     };
 
-    const handleChangePage = (event, newPage) => {};
+    const handleChangePage = (event, newPage) => {
+        router.get(shipments.first_page_url, { page: newPage + 1 });
+    };
 
     const handleChangeRowsPerPage = (event) => {
         const newRowsPerPage = parseInt(event.target.value, 10);
-        // Include the selected rowsPerPage as a query parameter in the request
-        router.get(shipments.first_page_url, {
-            perPage: newRowsPerPage,
-        });
+        router.get(shipments.first_page_url, { perPage: newRowsPerPage });
     };
+
     const icons = [
         {
             id: "filterList",
-            action: toggleDrawer(filterAnchor, !drawerState[filterAnchor]),
+            action: toggleDrawer("left", !drawerState.left),
         },
         {
             id: "add",
             title: "createNew",
             action: () => router.get("/shipments/save"),
             icon: Add,
-            permission: "shipping.shipment.create",
         },
     ];
 
@@ -110,68 +78,43 @@ const ShipmentsList = ({ shipments }) => {
         <LayoutWithDrawer>
             <RootStyleList>
                 <ListWrapper
-                    drawerState={drawerState[filterAnchor]}
+                    drawerState={drawerState.left}
                     icons={icons}
                     path={shipments?.path}
-                    empty={listShipments?.length === 0}
+                    empty={!listShipments?.length}
                     loading={loading}
                     filters={
                         <Grid
                             container
                             component="form"
                             onSubmit={handleSubmit(onSubmit)}
+                            spacing={2}
                         >
-                            <Grid
-                                container
-                                sm={12}
-                                justifyContent="flex-start"
-                                spacing={1}
-                                className={classes.filterField}
-                            >
-                                <Grid
-                                    sm={12}
-                                    spacing={1}
-                                    alignItems="flex-start"
-                                >
-                                    <ControlMUItextField
-                                        control={control}
-                                        errors={errors}
-                                        name={"price"}
-                                        label={t("price")}
-                                    />
-                                </Grid>
-                                <Grid
-                                    sm={12}
-                                    spacing={1}
-                                    alignItems="flex-start"
-                                >
-                                    <ControlMUItextField
-                                        control={control}
-                                        errors={errors}
-                                        name={"type"}
-                                        label={t("type")}
-                                    />
-                                </Grid>
-                                <Grid
-                                    sm={12}
-                                    spacing={1}
-                                    alignItems="flex-start"
-                                >
-                                    <ControlMUItextField
-                                        control={control}
-                                        errors={errors}
-                                        name={"payment_type"}
-                                        label={t("paymentType")}
-                                    />
-                                </Grid>
+                            <Grid item sm={12}>
+                                <ControlMUItextField
+                                    control={control}
+                                    errors={errors}
+                                    name="price"
+                                    label={t("price")}
+                                />
                             </Grid>
-                            <Grid
-                                container
-                                sm={12}
-                                className={classes.button}
-                                alignItems="flex-end"
-                                justifyContent="flex-end"
-                            >
+                            <Grid item sm={12}>
+                                <ControlMUItextField
+                                    control={control}
+                                    errors={errors}
+                                    name="type"
+                                    label={t("type")}
+                                />
+                            </Grid>
+                            <Grid item sm={12}>
+                                <ControlMUItextField
+                                    control={control}
+                                    errors={errors}
+                                    name="payment_type"
+                                    label={t("paymentType")}
+                                />
+                            </Grid>
+                            <Grid item sm={12} className={classes.button}>
                                 <Button
                                     type="submit"
                                     fullWidth
@@ -186,52 +129,36 @@ const ShipmentsList = ({ shipments }) => {
                         </Grid>
                     }
                     tableHeaders={[
-                        {
-                            name: "price",
-                        },
-                        {
-                            name: "type",
-                        },
-                        {
-                            name: "paymentType",
-                        },
+                        { name: "code" },
+                        { name: "price" },
+                        { name: "type" },
+                        { name: "paymentType" },
                     ]}
                     tableBody={
                         <TableBody>
-                            {listShipments &&
-                                listShipments?.map((row, index) => {
-                                    return (
-                                        <TableRow
-                                            hover
-                                            role="checkbox"
-                                            tabIndex={-1}
-                                            key={index}
-                                            className={classes.tableRow}
-                                        >
-                                            <CellLink
-                                                pathname={`/shipments/${row?.id}`}
-                                            >
-                                                {row?.id}
-                                            </CellLink>
-                                            <FixedTableCell>
-                                                {row.price}
-                                            </FixedTableCell>
-                                            <FixedTableCell>
-                                                {row.type}
-                                            </FixedTableCell>
-                                            <FixedTableCell>
-                                                {row.payment_type}
-                                            </FixedTableCell>
-                                        </TableRow>
-                                    );
-                                })}
+                            {listShipments?.map((row, index) => (
+                                <TableRow
+                                    hover
+                                    key={index}
+                                    className={classes.tableRow}
+                                >
+                                    <CellLink pathname={`/shipments/${row.id}`}>
+                                        {row.id}
+                                    </CellLink>
+                                    <FixedTableCell>{row.price}</FixedTableCell>
+                                    <FixedTableCell>{row.type}</FixedTableCell>
+                                    <FixedTableCell>
+                                        {row.payment_type}
+                                    </FixedTableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     }
                     pagination={
                         <MUITablePagination
                             count={shipments.total}
-                            rowsPerPage={shipments?.per_page}
-                            page={shipments?.current_page - 1}
+                            rowsPerPage={shipments.per_page}
+                            page={shipments.current_page - 1}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
                             shipments={shipments}

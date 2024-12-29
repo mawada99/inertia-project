@@ -49,7 +49,7 @@ const rows = [
     { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
 
-export default function HomePage({}) {
+export default function HomePage() {
     EchoConnection.channel("users").listenToAll(function (e) {});
     return (
         <LayoutWithDrawer>
